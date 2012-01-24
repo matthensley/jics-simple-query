@@ -1,0 +1,40 @@
+﻿@model Go.SimpleQuery.Models.SimpleQueryDataGrid
+
+@{
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+<style type="text/css">
+    #tblDataTable {
+        border-spacing: @Model.CellPadding;
+    }
+</style>
+<table id="tblDataTable">
+    @if (Model.ShowColumnHeaders) {
+        <thead>
+            <tr>
+            @foreach (var column in Model.Data.Columns)
+            {
+                <th>@column.ToString()</th>
+            }
+            </tr>
+        </thead>
+    }
+    @for (var r = 0; r < Model.Data.Rows.Count; r++ )
+    {
+        @if (Model.ShowAltColors && (r % 2) == 1) 
+        {
+            <tr style="background-color:#E0E0E0">
+        }
+        else
+        {
+            <tr>
+        }     
+        
+        
+                @for (var i = 0; i < Model.Data.Columns.Count; i++)
+                {
+                    <td>@Model.Data.Rows[r][i]</td>
+                }
+            </tr>
+    }
+</table>

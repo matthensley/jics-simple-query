@@ -34,15 +34,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CRM, Version=1.0.4289.24820, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="CUS.OdbcConnectionClass3, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>V:\Program Files\Jenzabar\Go\bin\CUS.OdbcConnectionClass3.dll</HintPath>
+    </Reference>
+    <Reference Include="ERP, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>V:\Program Files\Jenzabar\Go\bin\ERP.dll</HintPath>
     </Reference>
     <Reference Include="Jenzabar.Portal.Framework, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>V:\Program Files\Jenzabar\Go\bin\Jenzabar.Portal.Framework.dll</HintPath>
     </Reference>
     <Reference Include="mobile">
       <HintPath>V:\Program Files\Jenzabar\Go\bin\mobile.dll</HintPath>
+    </Reference>
+    <Reference Include="Portlet.SimpleQuery, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Portlet.CUS.SimpleQuery\bin\Portal-dev\Portlet.SimpleQuery.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages" />
@@ -69,21 +78,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\SimpleQueryController.cs" />
+    <Compile Include="Helpers\FillQueryString.cs" />
     <Compile Include="Models\SimpleQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleQueryDataRow.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\SimpleQuery\LiteralAction.cshtml" />
+    <Content Include="Views\SimpleQuery\Literal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\SimpleQuery\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Portlet.CUS.SimpleQuery\SimpleQuery.csproj">
-      <Project>{B50350B0-EABC-44FD-B2CA-9538E0FACB25}</Project>
-      <Name>SimpleQuery</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\SimpleQuery\None.cshtml" />
@@ -100,6 +104,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\SimpleQuery\DataGrid.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

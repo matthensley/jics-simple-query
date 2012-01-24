@@ -269,7 +269,7 @@ set NewTarget=$(TargetDir)..\..\..\Compiled\
 
 IF NOT EXIST "%25NewTarget%25Portal" md "%25NewTarget%25Portal"
 
-XCOPY "$(TargetDir)Portal" "%25NewTarget%25Portal" /E /Y
+XCOPY "$(TargetDir)Portal" "%25NewTarget%25Portal" /E /D /Y 
 XCOPY "$(TargetDir)..\*.sql" "%25NewTarget%25" /Y
 XCOPY "$(TargetDir)..\*.bat" "%25NewTarget%25" /Y
 XCOPY "$(TargetDir)..\*.ldf" "%25NewTarget%25" /Y

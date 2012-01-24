@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Security.Principal;
+using System.Web;
 using System.Web.Mvc;
 using CUS.ICS.SimpleQuery.Helpers;
 using CUS.ICS.SimpleQuery.Mappers;
@@ -19,7 +20,7 @@ namespace Go.SimpleQuery.Controllers
     {
         private readonly IPortalUserFacade _userFacade;
         private readonly NHSimpleQuerySettingsMapper _mapper;
-        
+
         public SimpleQueryController(IPortalUserFacade userFacade)
         {
             _userFacade = userFacade;
@@ -28,80 +29,82 @@ namespace Go.SimpleQuery.Controllers
 
         public ActionResult Index(ContentIdentifier cid, IPrincipal iPrincipal)
         {
+            var helper = GetHelper(cid.PortletId.Value);
 
-
-            SettingsHelper helper = GetHelper(cid.PortletId.Value);
-
+            ViewBag.Title = helper.GetSetting("QueryTitle").Value + " - " + iPrincipal.Identity.Name;
             switch (helper.GetSetting("GOOutput").Value)
             {
                 case "grid":
+                    var model = new SimpleQueryDataGrid
+                                    {
+                                        CellPadding = Convert.ToInt16(helper.GetSetting("GOSGridCellPadding", 5).Value),
+                                        ShowAltColors = helper.GetSetting("GOGridAltRowColors", false).BoolValue,
+                                        ShowColumnHeaders =
+                                            helper.GetSetting("GOGridShowColumnHeadings", false).BoolValue,
+                                        ShowGridlines = helper.GetSetting("GOGridShowGridlines", false).BoolValue,
+                                        AllowExports = helper.GetSetting("GOAllowExports").BoolValue,
+                                        ExportTypes = AllowedExports(helper),
+                                        Data = GetData(helper, iPrincipal.Identity.Name)
+                                    };
+                    return View("DataGrid", model);
                     break;
                 case "masterdetail":
+                    //return None();
                     break;
                 case "none":
                     return View("None");
-                    break;
-                default:
-                    var model = new Models.SimpleQuery
-                                    {
-                                        Action = helper.GetSetting("GOOutput").Value,
-                                        AllowExports = helper.GetSetting("GOAllowExports").BoolValue,
-                                        ExportTypes = AllowedExports(helper)
-                                    };
-                    return View(model);
-                    break;
+                case "xml":
+                    return xmlAction(cid, iPrincipal);
+                case "csv":
+                    return csvAction(cid, iPrincipal);
+                case "literal":
+                    return literalAction(cid, iPrincipal);
             }
-            DataTable dt = GetData(helper);
-            //switch (_helper.GetSetting("GOOutput").Value)
-            //{
-            //    case "grid":
-            //        break;
-            //    case "xml":
-            //        return XmlAction(dt);
-            //        break;
-            //    case "csv":
-            //        return CsvAction(_helper, dt);
-            //        break;
-            //    case "literal":
-            //        return LiteralAction(_helper, dt);
-            //        break;
-            //}
 
+            //DataTable dt = GetData(helper);
             return View();
         }
 
-        private ActionResult None()
-        {
-            return View();
-        }
-
-
-        public ActionResult XmlAction(ContentIdentifier cid)
-        {
-            var helper = GetHelper(cid.PortletId.Value);
-            return Content(OutputHelper.RenderXml(GetData(helper)), "text/xml");
-        }
-
-        public ActionResult CsvAction(ContentIdentifier cid)
-        {
-            var helper = GetHelper(cid.PortletId.Value);
-            return Content(OutputHelper.RenderCsv(GetData(helper),
-                                                  helper.GetSetting("GOGridShowColumnHeadings", false).BoolValue,
-                                                  helper.GetSetting("ColumnLabels").Value), "text/csv");
-        }
-
-        public ActionResult LiteralAction(ContentIdentifier cid)
+        public ActionResult xmlAction(ContentIdentifier cid, IPrincipal iPrincipal)
         {
             var helper = GetHelper(cid.PortletId.Value);
             var model = new SimpleQueryLiteral
-                            {Html = OutputHelper.RenderLiteral(GetData(helper), helper.GetSetting("LiteralFormat", "{0}").Value),
-                            ExportTypes = AllowedExports(helper),
-                             AllowExports = helper.GetSetting("GOAllowExports").BoolValue
+                            {
+                                Html = "<pre>" + HttpUtility.HtmlEncode(OutputHelper.RenderXml(GetData(helper, iPrincipal.Identity.Name))) +"</pre>",
+                                ExportTypes = AllowedExports(helper),
+                                AllowExports = helper.GetSetting("GOAllowExports").BoolValue
                             };
-            return View(model);
+            return View("Literal", model);
         }
 
-        private static List<String> AllowedExports (SettingsHelper _helper)
+        public ActionResult csvAction(ContentIdentifier cid, IPrincipal iPrincipal)
+        {
+            var helper = GetHelper(cid.PortletId.Value);
+            var model = new SimpleQueryLiteral
+                            {
+                                Html = "<pre>" + OutputHelper.RenderCsv(GetData(helper, iPrincipal.Identity.Name),
+                                                              helper.GetSetting("GOGridShowColumnHeadings", false).
+                                                                  BoolValue,
+                                                              helper.GetSetting("ColumnLabels").Value) + "</pre>",
+                                ExportTypes = AllowedExports(helper),
+                                AllowExports = helper.GetSetting("GOAllowExports").BoolValue
+                            };
+            return View("Literal", model);
+        }
+
+        public ActionResult literalAction(ContentIdentifier cid, IPrincipal iPrincipal)
+        {
+            var helper = GetHelper(cid.PortletId.Value);
+            var model = new SimpleQueryLiteral
+            {
+                Html = OutputHelper.RenderLiteral(GetData(helper, iPrincipal.Identity.Name), helper.GetSetting("LiteralFormat", "{0}").Value),
+                ExportTypes = AllowedExports(helper),
+                AllowExports = helper.GetSetting("GOAllowExports").BoolValue
+            };
+            return View("Literal", model);
+        }
+
+        private static List<String> AllowedExports(SettingsHelper _helper)
         {
             var exports = new List<String>();
             if (_helper.GetSetting("ExportXls", false).BoolValue)
@@ -127,47 +130,24 @@ namespace Go.SimpleQuery.Controllers
             return exports;
         }
 
-        private static DataTable GetData(SettingsHelper _helper)
+        private DataTable GetData(SettingsHelper _helper, string username)
         {
             //Try and connect
             CUS.OdbcConnectionClass3.OdbcConnectionClass3 odbcConn;
-            try
-            {
-                if (_helper.GetSetting("ConfigFile").Value.EndsWith(".config"))
-                    odbcConn = new CUS.OdbcConnectionClass3.OdbcConnectionClass3("~/ClientConfig/" + _helper.GetSetting("ConfigFile").Value);
-                else
-                    odbcConn = new CUS.OdbcConnectionClass3.OdbcConnectionClass3(_helper.GetSetting("ConfigFile").Value);
-            }
-            catch
-            {
-                //this.ParentPortlet.ShowFeedback(FeedbackType.Error, "Unable to locate usable connection string. Contact portal administrator.");
-                throw new Exception();
-            }
+            if (_helper.GetSetting("ConfigFile").Value.EndsWith(".config"))
+                odbcConn = new CUS.OdbcConnectionClass3.OdbcConnectionClass3("~/ClientConfig/" + _helper.GetSetting("ConfigFile").Value);
+            else
+                odbcConn = new CUS.OdbcConnectionClass3.OdbcConnectionClass3(_helper.GetSetting("ConfigFile").Value);
 
-            try
-            {
-                odbcConn.ConnectionTest();
-            }
-            catch
-            {
-                //this.ParentPortlet.ShowFeedback(FeedbackType.Error, "Database connection test failed. Contact portal administrator.");
-                throw new Exception();
-            }
+            odbcConn.ConnectionTest();
 
             var ex = new Exception();
-            try
-            {
-                var queryStringFiller = new FillQueryString(_helper.GetSetting("QueryText").Value);
-                if (Convert.ToInt16(_helper.GetSetting("QueryTimeout", 0).Value) > 0)
-                    return odbcConn.ConnectToERP(queryStringFiller.FilledQueryString, ref ex, Convert.ToInt16(_helper.GetSetting("QueryTimeout").Value));
-                else
-                    return odbcConn.ConnectToERP(queryStringFiller.FilledQueryString, ref ex);
-            }
-            catch (Exception ee)
-            {
-                //this.ParentPortlet.ShowFeedback(FeedbackType.Error, "Query Failed. Contact portal administrator. " + ex.ToString() + ee.ToString());
-                throw new Exception();
-            }
+            var queryStringFiller = new Helpers.FillQueryString(_helper.GetSetting("QueryText").Value,
+                                                                               _userFacade.FindByUsername(username));
+            if (Convert.ToInt16(_helper.GetSetting("QueryTimeout", 0).Value) > 0)
+                return odbcConn.ConnectToERP(queryStringFiller.FilledQueryString, ref ex, Convert.ToInt16(_helper.GetSetting("QueryTimeout").Value));
+            else
+                return odbcConn.ConnectToERP(queryStringFiller.FilledQueryString, ref ex);
         }
 
         private SettingsHelper GetHelper(Guid portletId)
