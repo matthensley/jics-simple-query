@@ -1,0 +1,11 @@
+﻿@model Go.SimpleQuery.Models.SimpleQuery
+@{
+    ViewBag.Title = "Simple Query";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<ul data-role="listview" data-inset="true">
+    <li>
+        <a href="@Url.Action(Model.Action)">Show Results</a>
+    </li>
+</ul>

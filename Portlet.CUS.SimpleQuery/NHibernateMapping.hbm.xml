@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="CUS.ICS.SimpleQuery.Entities" assembly="Portlet.SimpleQuery" default-lazy="false">
+    <class name="NHSimpleQuerySetting" table="CUS_SimpleQuerySettings">
+        <id name="ID" type="Guid">
+            <generator class="guid.comb" />
+        </id>
+        <property name="PortletID" type="Guid" />
+        <property name="Name" type="String" length="255" />
+        <property name="Value" type="String"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B50350B0-EABC-44FD-B2CA-9538E0FACB25}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>Portlet.SimpleQuery</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>CUS.ICS.SimpleQuery</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>..\..\..\..\bin\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Portal-dev|AnyCPU'">
+    <OutputPath>bin\Portal-dev\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dist|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Portal|AnyCPU'">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <DebugType>none</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CRM">
+      <HintPath>V:\Program Files\Jenzabar\ICS.NET\Portal\bin\CRM.dll</HintPath>
+    </Reference>
+    <Reference Include="CUS.OdbcConnectionClass3">
+      <HintPath>.\CUS.OdbcConnectionClass3.dll</HintPath>
+    </Reference>
+    <Reference Include="ERP">
+      <HintPath>\\bcjicslive1\e$\Program Files\Jenzabar\ICS.NET\Portal\bin\ERP.dll</HintPath>
+    </Reference>
+    <Reference Include="Jenzabar.Common">
+      <HintPath>V:\Program Files\Jenzabar\ICS.NET\Portal\bin\Jenzabar.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Jenzabar.ICS">
+      <HintPath>V:\Program Files\Jenzabar\ICS.NET\Portal\bin\Jenzabar.ICS.dll</HintPath>
+    </Reference>
+    <Reference Include="Jenzabar.Portal.Framework">
+      <HintPath>V:\Program Files\Jenzabar\ICS.NET\Portal\bin\Jenzabar.Portal.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Jenzabar.Portal.Framework.Web">
+      <HintPath>V:\Program Files\Jenzabar\ICS.NET\Portal\bin\Jenzabar.Portal.Framework.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=2.1.2.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>V:\Program Files\Jenzabar\ICS.NET\Portal\bin\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Extensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin_View.ascx" />
+    <Content Include="Default_View.ascx" />
+    <Content Include="Export_Data.aspx" />
+    <EmbeddedResource Include="NHibernateMapping.hbm.xml" />
+    <Compile Include="Admin.ashx.cs">
+      <DependentUpon>Admin.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin_View.ascx.cs">
+      <DependentUpon>Admin_View.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin_View.ascx.designer.cs">
+      <DependentUpon>Admin_View.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Default_View.ascx.cs">
+      <DependentUpon>Default_View.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default_View.ascx.designer.cs">
+      <DependentUpon>Default_View.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\NHSimpleQuerySetting.cs" />
+    <Compile Include="Export_Data.aspx.cs">
+      <DependentUpon>Export_Data.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Helpers\FillQueryString.cs" />
+    <Compile Include="Helpers\FormatXml.cs" />
+    <Compile Include="Helpers\JSDataTable.cs" />
+    <Compile Include="Helpers\OutputHelper.cs" />
+    <Compile Include="Helpers\QuerySafe.cs" />
+    <Compile Include="Helpers\StringWriterWithEncoding.cs" />
+    <Compile Include="Mappers\NHSimpleQuerySettingMapper.cs" />
+    <Compile Include="NHibernateFactory.cs" />
+    <Compile Include="Query.ashx.cs">
+      <DependentUpon>Query.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="SimpleQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Content Include="Query.ashx" />
+    <Content Include="Admin.ashx" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Portal-dev.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>cd $(TargetDir)
+rd /S /Q "$(TargetDir)Portal"</PreBuildEvent>
+    <PostBuildEvent>cd $(TargetDir)
+md "$(TargetDir)Portal"
+md "$(TargetDir)Portal\bin"
+md "$(TargetDir)Portal\Portlets"
+md "$(TargetDir)Portal\Portlets\CUS"
+md "$(TargetDir)Portal\Portlets\CUS\ICS"
+md "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)"
+
+copy "$(TargetName).*" "$(TargetDir)Portal\bin\"
+
+cd $(ProjectDir)
+IF EXIST *.ascx copy *.ascx "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\"
+IF EXIST *.aspx copy *.aspx "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\"
+IF EXIST *.asmx copy *.asmx "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\"
+IF EXIST *.ashx copy *.ashx "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\"
+
+IF EXIST images md "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\images"
+IF EXIST images copy images\*.* "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\images\"
+
+IF EXIST css md "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\css"
+IF EXIST css copy css\*.* "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\css\"
+
+IF EXIST js md "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\js"
+IF EXIST js copy js\*.* "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\js\"
+
+
+if "$(ConfigurationName)" == "Dist" goto :Dist
+if "$(ConfigurationName)" == "Portal-dev" goto :PortalDev
+if "$(ConfigurationName)" == "Portal" goto :Portal
+
+
+:PortalDev
+
+XCOPY "$(TargetDir)Portal" "V:\program files\jenzabar\ics.net\portal" /E /Y
+IF EXIST $(ProjectDir)ClientConfig XCOPY "$(ProjectDir)ClientConfig" "V:\program files\jenzabar\ics.net\portal\ClientConfig" /E /Y
+
+goto :exit
+
+
+:Portal
+
+XCOPY "$(TargetDir)Portal" "T:\program files\jenzabar\ics.net\portal" /E /Y
+XCOPY "$(TargetDir)Portal" "U:\program files\jenzabar\ics.net\portal" /E /Y
+IF EXIST $(ProjectDir)ClientConfig XCOPY "$(ProjectDir)ClientConfig" "T:\program files\jenzabar\ics.net\portal\ClientConfig" /E /Y
+IF EXIST $(ProjectDir)ClientConfig XCOPY "$(ProjectDir)ClientConfig" "U:\program files\jenzabar\ics.net\portal\ClientConfig" /E /Y
+
+goto :exit
+
+
+:Dist
+
+set NewTarget=$(TargetDir)..\..\..\Compiled\
+
+
+IF NOT EXIST "%25NewTarget%25Portal" md "%25NewTarget%25Portal"
+
+XCOPY "$(TargetDir)Portal" "%25NewTarget%25Portal" /E /Y
+XCOPY "$(TargetDir)..\*.sql" "%25NewTarget%25" /Y
+XCOPY "$(TargetDir)..\*.bat" "%25NewTarget%25" /Y
+XCOPY "$(TargetDir)..\*.ldf" "%25NewTarget%25" /Y
+IF EXIST $(ProjectDir)ClientConfig IF NOT EXIST "%25NewTarget%25Portal\ClientConfig"  md "%25NewTarget%25Portal\ClientConfig"
+IF EXIST $(ProjectDir)ClientConfig XCOPY "$(ProjectDir)ClientConfig" "%25NewTarget%25Portal\ClientConfig" /E /Y
+RMDIR "$(ProjectDir)bin" /S /Q
+RMDIR "$(ProjectDir)obj" /S /Q
+
+:exit</PostBuildEvent>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>2326</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+</Project>

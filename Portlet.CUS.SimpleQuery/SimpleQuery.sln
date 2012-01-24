@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleQuery", "SimpleQuery.csproj", "{B50350B0-EABC-44FD-B2CA-9538E0FACB25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Go.SimpleQuery", "..\Go.SimpleQuery\Go.SimpleQuery.csproj", "{DE0DC88B-0FFF-46A8-9D47-73CDC4A8C968}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Dist|Any CPU = Dist|Any CPU
+		Portal|Any CPU = Portal|Any CPU
+		Portal-dev|Any CPU = Portal-dev|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B50350B0-EABC-44FD-B2CA-9538E0FACB25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B50350B0-EABC-44FD-B2CA-9538E0FACB25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B50350B0-EABC-44FD-B2CA-9538E0FACB25}.Dist|Any CPU.ActiveCfg = Dist|Any CPU
+		{B50350B0-EABC-44FD-B2CA-9538E0FACB25}.Dist|Any CPU.Build.0 = Dist|Any CPU
+		{B50350B0-EABC-44FD-B2CA-9538E0FACB25}.Portal|Any CPU.ActiveCfg = Portal|Any CPU
+		{B50350B0-EABC-44FD-B2CA-9538E0FACB25}.Portal|Any CPU.Build.0 = Portal|Any CPU
+		{B50350B0-EABC-44FD-B2CA-9538E0FACB25}.Portal-dev|Any CPU.ActiveCfg = Portal-dev|Any CPU
+		{B50350B0-EABC-44FD-B2CA-9538E0FACB25}.Portal-dev|Any CPU.Build.0 = Portal-dev|Any CPU
+		{B50350B0-EABC-44FD-B2CA-9538E0FACB25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B50350B0-EABC-44FD-B2CA-9538E0FACB25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE0DC88B-0FFF-46A8-9D47-73CDC4A8C968}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE0DC88B-0FFF-46A8-9D47-73CDC4A8C968}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE0DC88B-0FFF-46A8-9D47-73CDC4A8C968}.Dist|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE0DC88B-0FFF-46A8-9D47-73CDC4A8C968}.Dist|Any CPU.Build.0 = Debug|Any CPU
+		{DE0DC88B-0FFF-46A8-9D47-73CDC4A8C968}.Portal|Any CPU.ActiveCfg = Release|Any CPU
+		{DE0DC88B-0FFF-46A8-9D47-73CDC4A8C968}.Portal|Any CPU.Build.0 = Release|Any CPU
+		{DE0DC88B-0FFF-46A8-9D47-73CDC4A8C968}.Portal-dev|Any CPU.ActiveCfg = Release|Any CPU
+		{DE0DC88B-0FFF-46A8-9D47-73CDC4A8C968}.Portal-dev|Any CPU.Build.0 = Release|Any CPU
+		{DE0DC88B-0FFF-46A8-9D47-73CDC4A8C968}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE0DC88B-0FFF-46A8-9D47-73CDC4A8C968}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

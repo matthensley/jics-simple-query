@@ -1,0 +1,19 @@
+# START - Simple Query
+dn: CN=[CUS] SimpleQuery,OU=PortletTemplates,CN=Portal,O=Jenzabar,C=US
+changetype: add
+jenzabar-ICSNET-GUID:: gYTdS1Pl8kaItWl0jbKZBA==
+objectClass: top
+objectClass: jenzabar-ICSNET-PortletTemplate
+displayName: Simple Query
+jenzabar-ICSNET-PortletPath: Portlet.SimpleQuery,CUS.ICS.SimpleQuery.SimpleQuery
+jenzabar-ICSNET-ApplicationPointer: CN=CUS,OU=PortalApplications,CN=Portal,O=Jenzabar,C=US
+instanceType: 4
+objectCategory: CN=Portlet-Template,CN=Schema,cn=configuration,cn=x
+
+dn: OU=Operations,CN=[CUS] SimpleQuery,OU=PortletTemplates,CN=Portal,O=Jenzabar,C=US
+changetype: add
+objectClass: top
+objectClass: organizationalUnit
+instanceType: 4
+objectCategory: CN=Organizational-Unit,CN=Schema,CN=Configuration,CN=X
+# END - Simple Query
