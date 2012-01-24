@@ -39,7 +39,7 @@ namespace Go.SimpleQuery.Controllers
                 case "masterdetail":
                     break;
                 case "none":
-                    return None();
+                    return View("None");
                     break;
                 default:
                     var model = new Models.SimpleQuery
