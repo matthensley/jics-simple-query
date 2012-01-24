@@ -4,10 +4,23 @@
     Layout = "~/Views/Shared/MainLayout.cshtml";
 }
 <style type="text/css">
-    #tblDataTable {
-        border-spacing: @Model.CellPadding;
+    #tblDataTable td{
+        padding: @(Model.CellPadding+"px");
     }
 </style>
+@if (Model.ShowGridlines)
+{
+    <style type="text/css">
+        #tblDataTable 
+        {
+            border-collapse: collapse;
+            border: 1px solid #000000;
+        }
+        #tblDataTable td, #tblDataTable th {
+            border: 1px solid #000000;
+        }
+    </style>
+}
 <table id="tblDataTable">
     @if (Model.ShowColumnHeaders) {
         <thead>
@@ -19,22 +32,27 @@
             </tr>
         </thead>
     }
+    <tbody>
     @for (var r = 0; r < Model.Data.Rows.Count; r++ )
     {
-        @if (Model.ShowAltColors && (r % 2) == 1) 
+        if (Model.ShowAltColors && (r % 2) == 1)
         {
             <tr style="background-color:#E0E0E0">
-        }
-        else
-        {
-            <tr>
-        }     
-        
-        
                 @for (var i = 0; i < Model.Data.Columns.Count; i++)
                 {
-                    <td>@Model.Data.Rows[r][i]</td>
+                        <td>@Model.Data.Rows[r][i]</td>
                 }
             </tr>
+        }
+        else
+         {
+             <tr>
+                 @for (var i = 0; i < Model.Data.Columns.Count; i++)
+                 {
+                     <td>@Model.Data.Rows[r][i]</td>
+                 }
+             </tr>
+         }
     }
+    </tbody>
 </table>

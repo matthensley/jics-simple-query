@@ -1,0 +1,11 @@
+﻿@model Go.SimpleQuery.Models.SimpleQueryMasterDetail
+@{
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<ul data-role="listview" data-inset="true">
+@foreach (var row in Model.MasterDetailData)
+{
+    <li>@row.Master</li>
+}
+</ul>

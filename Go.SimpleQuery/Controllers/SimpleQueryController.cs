@@ -31,11 +31,12 @@ namespace Go.SimpleQuery.Controllers
         {
             var helper = GetHelper(cid.PortletId.Value);
 
-            ViewBag.Title = helper.GetSetting("QueryTitle").Value + " - " + iPrincipal.Identity.Name;
+            ViewBag.Title = helper.GetSetting("QueryTitle").Value;
+            
             switch (helper.GetSetting("GOOutput").Value)
             {
                 case "grid":
-                    var model = new SimpleQueryDataGrid
+                    var gridmodel = new SimpleQueryDataGrid
                                     {
                                         CellPadding = Convert.ToInt16(helper.GetSetting("GOSGridCellPadding", 5).Value),
                                         ShowAltColors = helper.GetSetting("GOGridAltRowColors", false).BoolValue,
@@ -46,10 +47,20 @@ namespace Go.SimpleQuery.Controllers
                                         ExportTypes = AllowedExports(helper),
                                         Data = GetData(helper, iPrincipal.Identity.Name)
                                     };
-                    return View("DataGrid", model);
+                    return View("DataGrid", gridmodel);
                     break;
                 case "masterdetail":
-                    //return None();
+
+
+
+
+                    var mdmodel = new SimpleQueryMasterDetail
+                                      {
+                                          AllowExports = helper.GetSetting("GOAllowExports").BoolValue,
+                                          ExportTypes = AllowedExports(helper),
+                                          MasterDetailData = GetMasterDetailData(helper, iPrincipal.Identity.Name)
+                                      };
+                    return View("MasterDetail", mdmodel);
                     break;
                 case "none":
                     return View("None");
@@ -163,6 +174,34 @@ namespace Go.SimpleQuery.Controllers
                 ViewBag["error"] = ex.ToString();
                 throw;
             }
+        }
+
+        private List<SimpleQueryDataRow> GetMasterDetailData(SettingsHelper _helper, string username)
+        {
+            var ret = new List<SimpleQueryDataRow>();
+            var dt = GetData(_helper, username);
+            var detailColumns = _helper.GetSetting("GOMasterDetailDisplayColumns").Value.Split(',');
+            var columnLabels = _helper.GetSetting("ColumnLabels").Value.Split(',');
+            for (var r = 0; r < dt.Rows.Count; r++ )
+            {
+                var row = new SimpleQueryDataRow {Master = dt.Rows[r][0].ToString()};
+                foreach (var col in dt.Columns.Cast<DataColumn>().Where( x => detailColumns.Contains(x.ColumnName)))
+                {
+                        var test = new SimpleQueryDataColumn();
+                        try
+                        {
+                            test.Name = columnLabels[col.Ordinal] ?? col.ColumnName;    
+                        }
+                        catch
+                        {
+                            test.Name = col.ColumnName;
+                        }
+                        test.Value = dt.Rows[r][col.Ordinal].ToString();
+                    
+                }
+                ret.Add(row);
+            }
+            return ret;
         }
     }
 }
