@@ -304,7 +304,7 @@ namespace Go.SimpleQuery.Controllers
             var exports = new List<String>();
             if (helper.GetSetting("ExportXls", false).BoolValue)
             {
-                exports.Add("Xls");
+                //exports.Add("Xls"); //Disabled for the time being.  The method currently employed to produce "excel" files is fundamentally flawed and really needs to be revisted.
             }
 
             if (helper.GetSetting("ExportCsv", false).BoolValue)
