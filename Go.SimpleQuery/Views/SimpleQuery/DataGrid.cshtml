@@ -21,38 +21,46 @@
         }
     </style>
 }
-<table id="tblDataTable">
+<table id="tblDataTable" data-scroll="x">
     @if (Model.ShowColumnHeaders) {
         <thead>
             <tr>
-            @foreach (var column in Model.Data.Columns)
-            {
-                <th>@column.ToString()</th>
-            }
+                @foreach (var column in Model.Data.Columns)
+                {
+                    <th>@column.ToString()</th>
+                }
             </tr>
         </thead>
     }
     <tbody>
-    @for (var r = 0; r < Model.Data.Rows.Count; r++ )
-    {
-        if (Model.ShowAltColors && (r % 2) == 1)
+        @for (var r = 0; r < Model.Data.Rows.Count; r++ )
         {
-            <tr style="background-color:#E0E0E0">
-                @for (var i = 0; i < Model.Data.Columns.Count; i++)
-                {
+            if (Model.ShowAltColors && (r % 2) == 1)
+            {
+                <tr style="background-color:#E0E0E0">
+                    @for (var i = 0; i < Model.Data.Columns.Count; i++)
+                    {
                         <td>@Model.Data.Rows[r][i]</td>
-                }
-            </tr>
+                    }
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    @for (var i = 0; i < Model.Data.Columns.Count; i++)
+                    {
+                        <td>@Model.Data.Rows[r][i]</td>
+                    }
+                </tr>
+            }
         }
-        else
-         {
-             <tr>
-                 @for (var i = 0; i < Model.Data.Columns.Count; i++)
-                 {
-                     <td>@Model.Data.Rows[r][i]</td>
-                 }
-             </tr>
-         }
-    }
     </tbody>
 </table>
+
+
+@section headerButton {
+    @if (Model.AllowExports)
+    {
+        <a href="@Url.Action("Export")" class="ui-btn-right">Export</a>
+    }
+}

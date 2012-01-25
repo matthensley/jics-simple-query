@@ -91,7 +91,7 @@ namespace CUS.ICS.SimpleQuery
                                 strFilename = fileName + ".csv";
                                 break;
                             case "literal":
-                                sw.WriteLine(OutputHelper.RenderLiteral(dt, _helper.GetSetting("LiteralFormat", "{0}").Value));
+                                sw.WriteLine(OutputHelper.RenderLiteral(dt, _helper.GetSetting("ExportLiteralPattern", "{0}").Value));
                                 strContentType = "text/plain";
                                 strFilename = fileName + ".txt";
                                 break;

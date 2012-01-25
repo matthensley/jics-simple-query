@@ -206,7 +206,7 @@ namespace CUS.ICS.SimpleQuery
                                                       _helper.GetSetting("ColumnLabels").Value) + "</pre>";
                         break;
                     case "literal":
-                        preformattedResults.Text = OutputHelper.RenderLiteral(dt, _helper.GetSetting("LiteralFormat", "{0}").Value);
+                        preformattedResults.Text = OutputHelper.RenderLiteral(dt, _helper.GetSetting("ExportLiteralPattern", "{0}").Value);
                         break;
 
                 }

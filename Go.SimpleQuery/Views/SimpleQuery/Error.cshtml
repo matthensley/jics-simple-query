@@ -1,0 +1,26 @@
+﻿@model Go.SimpleQuery.Models.Error
+
+@{
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+<style type="text/css">
+    .errorMessage {
+        border: 2px solid #B00000;
+        font-size: 85%;
+        font-weight: bold;
+        margin: 15px;
+        padding: 0.6em;
+        background: none repeat scroll 0 0 #FFFFE4;
+        color: #B00000;
+    }
+</style>
+
+<div class="errorMessage">
+    @Model.ErrorMessage
+    @if (Model.Exception != String.Empty)
+    {
+        <br /><br />
+        @Html.Raw(@Model.Exception)
+    }
+    
+</div>

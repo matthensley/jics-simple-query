@@ -2,22 +2,26 @@
 @{
     Layout = "~/Views/Shared/MainLayout.cshtml";
 }
-   <script type="text/javascript">
-       $(document).bind("mobileinit", function () {
-           $.mobile.page.prototype.options.addBackBtn = true;
-       });    
-</script>   
+  
 <ul data-role="listview" data-inset="true">
-@foreach (var row in Model.MasterDetailData)
-{
-    <li>@row.Master
-        <ul data-inset="true">
-            <li><a href="#" data-rel="back" data-role="list-divider">Back</a></li>
-            @foreach (var detail in row.Details)
-            {
-                <li>@detail.Name :<span style="font-weight: normal !important">@detail.Value</span></li>
-            }
-        </ul>
+    @foreach (var row in Model.MasterDetailData)
+    {
+        <li>@row.Master
+            <ul data-role="listview">
+                <li><a href="#" data-rel="back" data-role="list-divider">Back</a></li>
+                @foreach (var detail in row.Details)
+                {
+                    <li>@detail.Name :<span style="font-weight: normal !important">@detail.Value</span></li>
+                }
+            </ul>
         </li>
-}
+    }
 </ul>
+
+
+@section headerButton {
+    @if (Model.AllowExports)
+    {
+        <a href="@Url.Action("Export")" class="ui-btn-right">Export</a>
+    }
+}

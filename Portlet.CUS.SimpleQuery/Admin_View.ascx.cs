@@ -253,54 +253,58 @@ namespace CUS.ICS.SimpleQuery
                 tbDescription.Text = _helper.GetSetting("JICSDescription").Value;
                 chkJICSAsync.Checked = _helper.GetSetting("JICSAsync", false).BoolValue;
 
+                chkJICSGridShowGridlines.Checked = _helper.GetSetting("JICSGridShowGridlines", false).BoolValue;
+                tbJICSGridCellPadding.Text = _helper.GetSetting("JICSGridCellPadding", 5).Value;
+                chkJICSGridAltRowColors.Checked = _helper.GetSetting("JICSGridAltRowColors", false).BoolValue;
+                chkJICSShowColumnHeadings.Checked = _helper.GetSetting("JICSGridShowColumnHeadings", false).BoolValue;
+                tbJICSDataTablesExpandedColumns.Text = _helper.GetSetting("JICSDataTablesExpandedColumns").Value;
+
                 using (var htmlInputRadioButton = _jicsOutputTypes.SingleOrDefault(x => x.Value == _helper.GetSetting("JICSOutput", "grid").Value))
                 {
                     if (htmlInputRadioButton != null)
                     {
                         htmlInputRadioButton.Checked = true;
-                        divJICSOutputGridSettings.Attributes["style"] = "display:none;";
-                        divJICSOutputDataTablesSettings.Attributes["style"] = "display:none;";
+                        divJICSOutputGridSettings.Attributes["style"] = "display:none;margin-left:20px;";
+                        divJICSOutputDataTablesSettings.Attributes["style"] = "display:none;margin-left:20px;";
                         switch (htmlInputRadioButton.Value)
                         {
                             case "grid":
                                 divJICSOutputGridSettings.Attributes["style"] = "margin-left:20px;";
-                                chkJICSGridShowGridlines.Checked = _helper.GetSetting("JICSGridShowGridlines", false).BoolValue;
-                                tbJICSGridCellPadding.Text = _helper.GetSetting("JICSGridCellPadding", 5).Value;
-                                chkJICSGridAltRowColors.Checked = _helper.GetSetting("JICSGridAltRowColors", false).BoolValue;
-                                chkJICSShowColumnHeadings.Checked = _helper.GetSetting("JICSGridShowColumnHeadings", false).BoolValue;
                                 break;
                             case "datatables":
                                 divJICSOutputDataTablesSettings.Attributes["style"] = "margin-left:20px;";
-                                tbJICSDataTablesExpandedColumns.Text = _helper.GetSetting("JICSDataTablesExpandedColumns").Value;
                                 break;
                         }
                     }
                 }
 
                 chkGOAllowExports.Checked = _helper.GetSetting("GOAllowExports", false).BoolValue;
-            using (var htmlInputRadioButton = _goOutputTypes.SingleOrDefault( x=> x.Value == _helper.GetSetting("GOOutput", "none").Value) )
-            {
-                if (htmlInputRadioButton != null)
+                chkGOGridShowGridlines.Checked = _helper.GetSetting("GOGridShowGridlines", false).BoolValue;
+                tbGOGridCellPadding.Text = _helper.GetSetting("GOGridCellPadding", 5).Value;
+                chkGOGridAltRowColors.Checked = _helper.GetSetting("GOGridAltRowColors", false).BoolValue;
+                chkGOGridShowColumnHeadings.Checked = _helper.GetSetting("GOGridShowColumnHeadings", false).BoolValue;
+                tbGOOutputMasterDetailDisplayColumns.Text = _helper.GetSetting("GOMasterDetailDisplayColumns").Value;
+
+                using (var htmlInputRadioButton = _goOutputTypes.SingleOrDefault( x=> x.Value == _helper.GetSetting("GOOutput", "none").Value) )
                 {
-                    htmlInputRadioButton.Checked = true;
-                    divGOOutputGridSettings.Attributes["style"] = "display:none;";
-                    divGOOutputMasterDetailSettings.Attributes["style"] = "display:none;";
-                    switch (htmlInputRadioButton.Value)
+                    if (htmlInputRadioButton != null)
                     {
-                        case "grid":
-                            divGOOutputGridSettings.Attributes["style"] = "margin-left:20px;";
-                            chkGOGridShowGridlines.Checked = _helper.GetSetting("GOGridShowGridlines", false).BoolValue;
-                            tbGOGridCellPadding.Text = _helper.GetSetting("GOGridCellPadding", 5).Value;
-                            chkGOGridAltRowColors.Checked = _helper.GetSetting("GOGridAltRowColors",false).BoolValue;
-                            chkGOGridShowColumnHeadings.Checked = _helper.GetSetting("GOGridShowColumnHeadings", false).BoolValue;
-                            break;
-                        case "masterdetail":
-                            divGOOutputMasterDetailSettings.Attributes["style"] = "margin-left:20px;";
-                            tbGOOutputMasterDetailDisplayColumns.Text = _helper.GetSetting("GOMasterDetailDisplayColumns").Value;
-                            break;
+                        htmlInputRadioButton.Checked = true;
+                        divGOOutputGridSettings.Attributes["style"] = "display:none;margin-left:20px;";
+                        divGOOutputMasterDetailSettings.Attributes["style"] = "display:none;margin-left:20px;";
+                        switch (htmlInputRadioButton.Value)
+                        {
+                            case "grid":
+                                divGOOutputGridSettings.Attributes["style"] = "margin-left:20px;";
+
+                                break;
+                            case "masterdetail":
+                                divGOOutputMasterDetailSettings.Attributes["style"] = "margin-left:20px;";
+                                
+                                break;
+                        }
                     }
                 }
-            }
 
 
 

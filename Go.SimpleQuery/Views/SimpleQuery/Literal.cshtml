@@ -4,3 +4,11 @@
 }
 
 @Html.Raw(Model.Html)
+
+
+@section headerButton {
+    @if (Model.AllowExports)
+    {
+        <a href="@Url.Action("Export")" class="ui-btn-right">Export</a>
+    }
+}

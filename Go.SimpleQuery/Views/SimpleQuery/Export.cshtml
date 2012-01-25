@@ -1,0 +1,11 @@
+﻿@model Go.SimpleQuery.Models.SimpleQueryExport
+@{
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<ul data-role="listview" data-inset="true">
+@foreach (var exportType in Model.ExportTypes)
+{
+    <li data-icon="download-icon"><a href="@Url.Action("ExportFile", new { fileType = exportType })" target="_blank" rel="external">@exportType</a></li>    
+}
+</ul>

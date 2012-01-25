@@ -6,9 +6,13 @@ namespace Go.SimpleQuery.Models
 {
     public class SimpleQuery
     {
-        public List<string> ExportTypes { get; set; }
         public bool AllowExports { get; set; }
         public string Action { get; set; }
+    }
+
+    public class SimpleQueryExport : SimpleQuery
+    {
+        public List<string> ExportTypes { get; set; }
     }
 
     public class SimpleQueryMasterDetail : SimpleQuery

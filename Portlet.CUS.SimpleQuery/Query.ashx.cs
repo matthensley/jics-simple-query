@@ -199,7 +199,7 @@ namespace CUS.ICS.SimpleQuery
                                                                   _helper.GetSetting("ColumnLabels").Value) + "</pre>";
                                     break;
                                 case "literal":
-                                    html = OutputHelper.RenderLiteral(dt,_helper.GetSetting("LiteralFormat", "{0}").Value);
+                                    html = OutputHelper.RenderLiteral(dt, _helper.GetSetting("ExportLiteralPattern", "{0}").Value);
                                     break;
 
                             }
