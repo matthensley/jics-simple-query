@@ -9,6 +9,11 @@ namespace Go.SimpleQuery
     {
         public string Master { get; set; }
         public List<SimpleQueryDataColumn> Details { get; set; }
+
+        public SimpleQueryDataRow()
+        {
+            Details = new List<SimpleQueryDataColumn>();
+        }
     }
 
     public class SimpleQueryDataColumn

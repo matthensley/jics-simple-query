@@ -2,10 +2,22 @@
 @{
     Layout = "~/Views/Shared/MainLayout.cshtml";
 }
-
+   <script type="text/javascript">
+       $(document).bind("mobileinit", function () {
+           $.mobile.page.prototype.options.addBackBtn = true;
+       });    
+</script>   
 <ul data-role="listview" data-inset="true">
 @foreach (var row in Model.MasterDetailData)
 {
-    <li>@row.Master</li>
+    <li>@row.Master
+        <ul data-inset="true">
+            <li><a href="#" data-rel="back" data-role="list-divider">Back</a></li>
+            @foreach (var detail in row.Details)
+            {
+                <li>@detail.Name :<span style="font-weight: normal !important">@detail.Value</span></li>
+            }
+        </ul>
+        </li>
 }
 </ul>

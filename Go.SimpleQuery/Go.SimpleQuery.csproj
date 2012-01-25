@@ -51,7 +51,7 @@
     </Reference>
     <Reference Include="Portlet.SimpleQuery, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Portlet.CUS.SimpleQuery\bin\Portal-dev\Portlet.SimpleQuery.dll</HintPath>
+      <HintPath>V:\Program Files\Jenzabar\ICS.NET\Portal\bin\Portlet.SimpleQuery.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages" />

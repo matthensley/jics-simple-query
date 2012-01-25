@@ -182,21 +182,24 @@ namespace Go.SimpleQuery.Controllers
             var dt = GetData(_helper, username);
             var detailColumns = _helper.GetSetting("GOMasterDetailDisplayColumns").Value.Split(',');
             var columnLabels = _helper.GetSetting("ColumnLabels").Value.Split(',');
+
             for (var r = 0; r < dt.Rows.Count; r++ )
             {
                 var row = new SimpleQueryDataRow {Master = dt.Rows[r][0].ToString()};
-                foreach (var col in dt.Columns.Cast<DataColumn>().Where( x => detailColumns.Contains(x.ColumnName)))
+                foreach (var col in dt.Columns.Cast<DataColumn>())
                 {
-                        var test = new SimpleQueryDataColumn();
-                        try
-                        {
-                            test.Name = columnLabels[col.Ordinal] ?? col.ColumnName;    
-                        }
-                        catch
-                        {
-                            test.Name = col.ColumnName;
-                        }
-                        test.Value = dt.Rows[r][col.Ordinal].ToString();
+                    string columnName;
+                    try
+                    {
+                        columnName = columnLabels[col.Ordinal];
+                    }
+                    catch
+                    {
+                        columnName = col.ColumnName;
+                    }
+                    if (detailColumns.Contains(columnName))
+                        row.Details.Add(new SimpleQueryDataColumn
+                                         {Value = dt.Rows[r][col.Ordinal].ToString(), Name = columnName});
                     
                 }
                 ret.Add(row);
