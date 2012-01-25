@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleQuery", "SimpleQuery.csproj", "{B50350B0-EABC-44FD-B2CA-9538E0FACB25}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Go.SimpleQuery", "..\Go.SimpleQuery\Go.SimpleQuery.csproj", "{DE0DC88B-0FFF-46A8-9D47-73CDC4A8C968}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B50350B0-EABC-44FD-B2CA-9538E0FACB25} = {B50350B0-EABC-44FD-B2CA-9538E0FACB25}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

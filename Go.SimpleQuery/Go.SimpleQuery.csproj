@@ -49,10 +49,6 @@
     <Reference Include="mobile">
       <HintPath>V:\Program Files\Jenzabar\Go\bin\mobile.dll</HintPath>
     </Reference>
-    <Reference Include="Portlet.SimpleQuery, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>V:\Program Files\Jenzabar\ICS.NET\Portal\bin\Portlet.SimpleQuery.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages" />
     <Reference Include="System.Web.Helpers" />
@@ -114,6 +110,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\SimpleQuery\Error.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Portlet.CUS.SimpleQuery\SimpleQuery.csproj">
+      <Project>{B50350B0-EABC-44FD-B2CA-9538E0FACB25}</Project>
+      <Name>SimpleQuery</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

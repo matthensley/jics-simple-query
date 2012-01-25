@@ -148,7 +148,7 @@
             <asp:Label ID="lblQueryTitle" runat="server"></asp:Label>
         </h4>
     </asp:Panel>
-    <asp:Panel runat="server" ID="pnlExport">
+    <asp:Panel runat="server" ID="pnlExport" Visible="False">
         <span style="float:left;margin-top: 3px;padding-right: 10px;">Export To:</span>
         <asp:HyperLink ID="lnkExportExcel" runat="server" Target="_blank" Visible="False">Excel</asp:HyperLink> 
         <asp:HyperLink ID="lnkExportCsv" runat="server" Target="_blank"  Visible="False">CSV</asp:HyperLink> 
