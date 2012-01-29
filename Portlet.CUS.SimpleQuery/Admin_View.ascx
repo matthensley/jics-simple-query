@@ -69,11 +69,11 @@
 
             $('#<%= chkDisplayResultsMinimized.ClientID %>').change(function () {
                 if ($(this).attr('checked')) {
-                    $('#<%= pLinkText.ClientID %>').show();
-                    $('#<%= pDescription.ClientID %>').show();
+                    $('#<%= trLinkText.ClientID %>').hide();
+                    $('#<%= trLinkDescription.ClientID %>').hide();
                 } else {
-                    $('#<%= pLinkText.ClientID %>').hide();
-                    $('#<%= pDescription.ClientID %>').hide();
+                    $('#<%= trLinkText.ClientID %>').show();
+                    $('#<%= trLinkDescription.ClientID %>').show();
                 }
             });
 
@@ -289,9 +289,9 @@
                         <li>@@HostID - the ERP ID number for the logged in JICS user</li>
                         <li>@@Username - the JICS username for the logged in user</li>
                         <li>@@EmailAddress - the JICS email address for the logged in user</li>
-                        <li>@@FirstName - the JICS username for the logged in user</li>
-                        <li>@@LastName - the JICS username for the logged in user</li>
-                        <li>@@MiddleName - the JICS username for the logged in user</li>
+                        <li>@@FirstName - the First Name for the logged in user</li>
+                        <li>@@LastName - the Last Name for the logged in user</li>
+                        <li>@@MiddleName - the Middle Name for the logged in user</li>
                         <li>@@DisplayName - combination of Preferred First and Last names for the logged in
                             user</li>
                         <li>@@CurrentYear - the ERP system academic year configured as current</li>
@@ -308,7 +308,7 @@
                 </td>
                 <td>
                     The number of seconds to allow the query to run without quitting. If a zero or blank
-                    value is provided, the default (usually 30 seconds) will apply.
+                    value is provided, the default (usually 30 seconds) will apply.  The upper limit on a page load is 90 seconds so a timeout past that won't work.
                 </td>
             </tr>
             <tr>
@@ -364,7 +364,7 @@
                 <td>
                     <p>
                         Format:
-                        <asp:TextBox runat="server" ID="tbExportLiteralPattern"></asp:TextBox></p>
+                        <asp:TextBox runat="server" ID="tbExportLiteralPattern" TextMode="MultiLine" Rows="3" Columns="40"></asp:TextBox></p>
                 </td>
                 <td>
                     <p>
@@ -384,10 +384,10 @@
                 </td>
                 <td>
                     <asp:CheckBox runat="server" ID="chkDisplayResultsMinimized" Text="Show results in both Minimized and Maximized View"/>
-                <td/>
+                </td>
                 <td>If not set, a link and description will be shown in the mimized view.</td>
             </tr>
-            <tr>
+            <tr id="trLinkText" runat="server">
                 <td><strong>Link Text </strong></td>
                 <td>
                     <p id="pLinkText" runat="server">
@@ -396,7 +396,7 @@
                 </td>
                 <td>Uses &quot;Show Results&quot; if not set</td>
             </tr>
-            <tr>
+            <tr id="trLinkDescription" runat="server">
                 <td><strong>Description</strong></td>
                 <td>
                     <p id="pDescription" runat="server">
@@ -453,7 +453,8 @@
                     <strong>Plain Grid</strong> shows the data in a simple static table on the page.<br />
                     <strong>Dynamic Data Table</strong> presents query results in a sortable, searchable,
                     paged grid using jQuery DataTables. This will ignore any table formatting specified
-                    in portlet Settings.
+                    in portlet Settings.<br />
+                    <strong>Literal:</strong> If set, the literal format set under the Export options will be used.
                 </td>
             </tr>
              <tr>
@@ -509,13 +510,14 @@
                 <td>
                     <strong>Plain Grid</strong> shows the data in a simple static table on the page.<br />
                     <strong>Master-Detail Mode</strong> presents results with the first column being displayed only.  On tap (click) the rest of the columns specified in "Detail Display Columns" are shown.
+                    <strong>Literal:</strong> If set, the literal format set under the Export options will be used.
                 </td>
             </tr>
             <tr>
                 <td colspan="3" style="text-align: center;">
                     
-                    <asp:Button ID="btnSave" runat="server" Text="Save"></asp:Button><br />
-                    <br />
+                    <asp:Button ID="btnSave" runat="server" Text="Save"></asp:Button>
+                    <asp:Button runat="server" ID="btnSaveAndExit" Text="Save and Exit"/>
                     <asp:Button ID="btnCancel" runat="server" Text="Exit"></asp:Button>
                     
                 </td>
@@ -523,3 +525,4 @@
         </table>
     </div>
 </div>
+<div style="clear:both"></div>

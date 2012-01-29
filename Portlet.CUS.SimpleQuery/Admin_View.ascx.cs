@@ -51,9 +51,15 @@ namespace CUS.ICS.SimpleQuery
         {
             btnSave.Click += new EventHandler(btnSave_Click);
             btnCancel.Click += new EventHandler(btnCancel_Click);
-
+            btnSaveAndExit.Click += new EventHandler(btnSaveAndExit_Click);
             InitializeComponent();
             base.OnInit(e);
+        }
+
+        void btnSaveAndExit_Click(object sender, EventArgs e)
+        {
+            Save();
+            this.ParentPortlet.PreviousScreen();
         }
 
         void btnCancel_Click(object sender, EventArgs e)
@@ -73,142 +79,11 @@ namespace CUS.ICS.SimpleQuery
         }
         #endregion
 
+
+
         void btnSave_Click(object sender, EventArgs e)
         {
-
-            _mapper.UpdateSetting(_helper.GetSetting("QueryTitle"), tbQueryTitle.Text);
-            _mapper.UpdateSetting(_helper.GetSetting("QueryText"), txtQuery.Text);
-            
-
-            if (ddlConfigFile.SelectedValue == "") //Set to Other
-            {
-                _mapper.UpdateSetting(_helper.GetSetting("ConfigFile"), tbConfigFile.Text);
-            }
-            else
-            {
-                tbConfigFile.Attributes.CssStyle.Remove("display");
-                _mapper.UpdateSetting(_helper.GetSetting("ConfigFile"), ddlConfigFile.SelectedValue);
-                tbConfigFile.Text = "";
-            }
-
-
-            var i = 0;
-            _mapper.UpdateSetting(_helper.GetSetting("QueryTimeout", 0),
-                                  Int32.TryParse(tbQueryTimeout.Text, out i) ? i.ToString() : "0");
-
-            i = 0;
-            _mapper.UpdateSetting(_helper.GetSetting("RowLimit", 0),
-                                  Int32.TryParse(tbRowLimit.Text, out i) ? i.ToString() : "0");
-
-            _mapper.UpdateSetting(_helper.GetSetting("JICSDisplayResultsMinimized", false), chkDisplayResultsMinimized.Checked);
-
-            var columnLabels = new List<String>();
-            if (txtColumnLabels.Text.Trim().Length > 0)
-            {
-                if (txtColumnLabels.Text.Contains(","))
-                {
-                    columnLabels.AddRange(txtColumnLabels.Text.Split(',').Select(column => column.Trim()));
-                }
-                else
-                {
-                    columnLabels.Add(txtColumnLabels.Text.Trim());
-                }
-            }
-            _mapper.UpdateSetting(_helper.GetSetting("ColumnLabels"), String.Join(",", columnLabels.ToArray()));
-            txtColumnLabels.Text = String.Join(",", columnLabels.ToArray());
-
-
-            _mapper.UpdateSetting(_helper.GetSetting("ExportXls"), chkExportXls.Checked);
-            _mapper.UpdateSetting(_helper.GetSetting("ExportXml"), chkExportXml.Checked);
-            _mapper.UpdateSetting(_helper.GetSetting("ExportCsv"), chkExportCsv.Checked);
-            _mapper.UpdateSetting(_helper.GetSetting("ExportLiteral"), chkExportLiteral.Checked);
-            _mapper.UpdateSetting(_helper.GetSetting("ExportLiteralPattern"), tbExportLiteralPattern.Text);
-
-            _mapper.UpdateSetting(_helper.GetSetting("JICSAllowExports"), chkJICSAllowExports.Checked);
-            _mapper.UpdateSetting(_helper.GetSetting("JICSLinkText"), tbLinkText.Text);
-            _mapper.UpdateSetting(_helper.GetSetting("JICSDescription"), tbDescription.Text);
-            _mapper.UpdateSetting(_helper.GetSetting("JICSAsync"), chkJICSAsync.Checked);
-
-            using (var htmlInputRadioButton = _jicsOutputTypes.SingleOrDefault(x => x.Checked))
-            {
-                if (htmlInputRadioButton != null)
-                {
-                    _mapper.UpdateSetting(_helper.GetSetting("JICSOutput"), htmlInputRadioButton.Value);
-                    switch (htmlInputRadioButton.Value)
-                    {
-                        case "grid":
-                            
-                            _mapper.UpdateSetting(_helper.GetSetting("JICSGridShowGridlines"), chkJICSGridShowGridlines.Checked);
-                            _mapper.UpdateSetting(_helper.GetSetting("JICSGridCellPadding"), tbJICSGridCellPadding.Text.Trim() == "" ? "0" : tbJICSGridCellPadding.Text);
-                            _mapper.UpdateSetting(_helper.GetSetting("JICSGridAltRowColors"), chkJICSGridAltRowColors.Checked);
-                            _mapper.UpdateSetting(_helper.GetSetting("JICSGridShowColumnHeadings"), chkJICSShowColumnHeadings.Checked);
-                            break;
-                        case "datatables":
-                            var expandedColumn = new List<string>();
-                            if (tbJICSDataTablesExpandedColumns.Text.Trim().Length > 0)
-                            {
-                                if (tbJICSDataTablesExpandedColumns.Text.Contains(","))
-                                {
-                                    expandedColumn.AddRange(tbJICSDataTablesExpandedColumns.Text.Split(',').Select(column => column.Trim()));
-                                }
-                                else
-                                {
-                                    expandedColumn.Add(tbJICSDataTablesExpandedColumns.Text.Trim());
-                                }
-                            }
-                            _mapper.UpdateSetting(_helper.GetSetting("JICSDataTablesExpandedColumns"), String.Join(",", expandedColumn.ToArray()));
-
-                            tbJICSDataTablesExpandedColumns.Text = String.Join(",", expandedColumn.ToArray());
-
-                            break;
-                    }
-                }
-                else
-                {
-                    _mapper.UpdateSetting(_helper.GetSetting("JICSOutput"), "grid");
-                }
-            }
-
-            _mapper.UpdateSetting(_helper.GetSetting("GOAllowExports"), chkGOAllowExports.Checked);
-            using (var htmlInputRadioButton = _goOutputTypes.SingleOrDefault( x=> x.Checked) )
-            {
-                if (htmlInputRadioButton != null)
-                {
-                    _mapper.UpdateSetting(_helper.GetSetting("GOOutput"), htmlInputRadioButton.Value);
-                    switch(htmlInputRadioButton.Value)
-                    {
-                        case "grid":
-                            
-                            _mapper.UpdateSetting(_helper.GetSetting("GOGridShowGridlines"), chkGOGridShowGridlines.Checked);
-                            _mapper.UpdateSetting(_helper.GetSetting("GOSGridCellPadding"), tbGOGridCellPadding.Text.Trim() == "" ? "0" : tbGOGridCellPadding.Text);
-                            _mapper.UpdateSetting(_helper.GetSetting("GOGridAltRowColors"), chkGOGridAltRowColors.Checked);
-                            _mapper.UpdateSetting(_helper.GetSetting("GOGridShowColumnHeadings"), chkGOGridShowColumnHeadings.Checked);
-                            break;
-                        case "masterdetail":
-                            var expandedColumn = new List<string>();
-                            if (tbGOOutputMasterDetailDisplayColumns.Text.Trim().Length > 0)
-                            {
-                                if (tbGOOutputMasterDetailDisplayColumns.Text.Contains(","))
-                                {
-                                    expandedColumn.AddRange(tbGOOutputMasterDetailDisplayColumns.Text.Split(',').Select(column => column.Trim()));
-                                }
-                                else
-                                {
-                                    expandedColumn.Add(tbGOOutputMasterDetailDisplayColumns.Text.Trim());
-                                }
-                            }
-                            _mapper.UpdateSetting(_helper.GetSetting("GOMasterDetailDisplayColumns"), String.Join(",", expandedColumn.ToArray()));
-
-                            tbGOOutputMasterDetailDisplayColumns.Text = String.Join(",", expandedColumn.ToArray());
-                            break;
-                    }
-
-                }else
-                {
-                    _mapper.UpdateSetting(_helper.GetSetting("GOOutput"), "none");
-                }
-            }
-            _settings = _mapper.GetSettings(_portletId).ToList();
+            Save();
             ShowCurrentValues();
         }
 
@@ -234,6 +109,15 @@ namespace CUS.ICS.SimpleQuery
 
                 tbRowLimit.Text = _helper.GetSetting("RowLimit", 0).Value;
                 chkDisplayResultsMinimized.Checked =_helper.GetSetting("JICSDisplayResultsMinimized", false).BoolValue;
+                if (chkDisplayResultsMinimized.Checked)
+                {
+                    trLinkText.Attributes["style"] = "display:none";
+                    trLinkDescription.Attributes["style"] = "display:none";
+                }else
+                {
+                    trLinkText.Attributes["style"] = "";
+                    trLinkDescription.Attributes["style"] = "";
+                }
 
                 chkExportXls.Checked = _helper.GetSetting("ExportXls", false).BoolValue;
                 chkExportXml.Checked = _helper.GetSetting("ExportXml", false).BoolValue;
@@ -316,6 +200,144 @@ namespace CUS.ICS.SimpleQuery
                 txtColumnLabels.Text = string.Empty;
                 this.ParentPortlet.ShowFeedback(FeedbackType.Error, "Couldn't Load Settings: " + ex);
             }
+        }
+
+        private void Save()
+        {
+            _mapper.UpdateSetting(_helper.GetSetting("QueryTitle"), tbQueryTitle.Text);
+            _mapper.UpdateSetting(_helper.GetSetting("QueryText"), txtQuery.Text);
+
+
+            if (ddlConfigFile.SelectedValue == "") //Set to Other
+            {
+                _mapper.UpdateSetting(_helper.GetSetting("ConfigFile"), tbConfigFile.Text);
+            }
+            else
+            {
+                tbConfigFile.Attributes.CssStyle.Remove("display");
+                _mapper.UpdateSetting(_helper.GetSetting("ConfigFile"), ddlConfigFile.SelectedValue);
+                tbConfigFile.Text = "";
+            }
+
+
+            var i = 0;
+            _mapper.UpdateSetting(_helper.GetSetting("QueryTimeout", 0),
+                                  Int32.TryParse(tbQueryTimeout.Text, out i) ? i.ToString() : "0");
+
+            i = 0;
+            _mapper.UpdateSetting(_helper.GetSetting("RowLimit", 0),
+                                  Int32.TryParse(tbRowLimit.Text, out i) ? i.ToString() : "0");
+
+            _mapper.UpdateSetting(_helper.GetSetting("JICSDisplayResultsMinimized", false), chkDisplayResultsMinimized.Checked);
+
+            var columnLabels = new List<String>();
+            if (txtColumnLabels.Text.Trim().Length > 0)
+            {
+                if (txtColumnLabels.Text.Contains(","))
+                {
+                    columnLabels.AddRange(txtColumnLabels.Text.Split(',').Select(column => column.Trim()));
+                }
+                else
+                {
+                    columnLabels.Add(txtColumnLabels.Text.Trim());
+                }
+            }
+            _mapper.UpdateSetting(_helper.GetSetting("ColumnLabels"), String.Join(",", columnLabels.ToArray()));
+            txtColumnLabels.Text = String.Join(",", columnLabels.ToArray());
+
+
+            _mapper.UpdateSetting(_helper.GetSetting("ExportXls"), chkExportXls.Checked);
+            _mapper.UpdateSetting(_helper.GetSetting("ExportXml"), chkExportXml.Checked);
+            _mapper.UpdateSetting(_helper.GetSetting("ExportCsv"), chkExportCsv.Checked);
+            _mapper.UpdateSetting(_helper.GetSetting("ExportLiteral"), chkExportLiteral.Checked);
+            _mapper.UpdateSetting(_helper.GetSetting("ExportLiteralPattern"), tbExportLiteralPattern.Text);
+
+            _mapper.UpdateSetting(_helper.GetSetting("JICSAllowExports"), chkJICSAllowExports.Checked);
+            _mapper.UpdateSetting(_helper.GetSetting("JICSLinkText"), tbLinkText.Text);
+            _mapper.UpdateSetting(_helper.GetSetting("JICSDescription"), tbDescription.Text);
+            _mapper.UpdateSetting(_helper.GetSetting("JICSAsync"), chkJICSAsync.Checked);
+
+            using (var htmlInputRadioButton = _jicsOutputTypes.SingleOrDefault(x => x.Checked))
+            {
+                if (htmlInputRadioButton != null)
+                {
+                    _mapper.UpdateSetting(_helper.GetSetting("JICSOutput"), htmlInputRadioButton.Value);
+                    switch (htmlInputRadioButton.Value)
+                    {
+                        case "grid":
+
+                            _mapper.UpdateSetting(_helper.GetSetting("JICSGridShowGridlines"), chkJICSGridShowGridlines.Checked);
+                            _mapper.UpdateSetting(_helper.GetSetting("JICSGridCellPadding"), tbJICSGridCellPadding.Text.Trim() == "" ? "0" : tbJICSGridCellPadding.Text);
+                            _mapper.UpdateSetting(_helper.GetSetting("JICSGridAltRowColors"), chkJICSGridAltRowColors.Checked);
+                            _mapper.UpdateSetting(_helper.GetSetting("JICSGridShowColumnHeadings"), chkJICSShowColumnHeadings.Checked);
+                            break;
+                        case "datatables":
+                            var expandedColumn = new List<string>();
+                            if (tbJICSDataTablesExpandedColumns.Text.Trim().Length > 0)
+                            {
+                                if (tbJICSDataTablesExpandedColumns.Text.Contains(","))
+                                {
+                                    expandedColumn.AddRange(tbJICSDataTablesExpandedColumns.Text.Split(',').Select(column => column.Trim()));
+                                }
+                                else
+                                {
+                                    expandedColumn.Add(tbJICSDataTablesExpandedColumns.Text.Trim());
+                                }
+                            }
+                            _mapper.UpdateSetting(_helper.GetSetting("JICSDataTablesExpandedColumns"), String.Join(",", expandedColumn.ToArray()));
+
+                            tbJICSDataTablesExpandedColumns.Text = String.Join(",", expandedColumn.ToArray());
+
+                            break;
+                    }
+                }
+                else
+                {
+                    _mapper.UpdateSetting(_helper.GetSetting("JICSOutput"), "grid");
+                }
+            }
+
+            _mapper.UpdateSetting(_helper.GetSetting("GOAllowExports"), chkGOAllowExports.Checked);
+            using (var htmlInputRadioButton = _goOutputTypes.SingleOrDefault(x => x.Checked))
+            {
+                if (htmlInputRadioButton != null)
+                {
+                    _mapper.UpdateSetting(_helper.GetSetting("GOOutput"), htmlInputRadioButton.Value);
+                    switch (htmlInputRadioButton.Value)
+                    {
+                        case "grid":
+
+                            _mapper.UpdateSetting(_helper.GetSetting("GOGridShowGridlines"), chkGOGridShowGridlines.Checked);
+                            _mapper.UpdateSetting(_helper.GetSetting("GOSGridCellPadding"), tbGOGridCellPadding.Text.Trim() == "" ? "0" : tbGOGridCellPadding.Text);
+                            _mapper.UpdateSetting(_helper.GetSetting("GOGridAltRowColors"), chkGOGridAltRowColors.Checked);
+                            _mapper.UpdateSetting(_helper.GetSetting("GOGridShowColumnHeadings"), chkGOGridShowColumnHeadings.Checked);
+                            break;
+                        case "masterdetail":
+                            var expandedColumn = new List<string>();
+                            if (tbGOOutputMasterDetailDisplayColumns.Text.Trim().Length > 0)
+                            {
+                                if (tbGOOutputMasterDetailDisplayColumns.Text.Contains(","))
+                                {
+                                    expandedColumn.AddRange(tbGOOutputMasterDetailDisplayColumns.Text.Split(',').Select(column => column.Trim()));
+                                }
+                                else
+                                {
+                                    expandedColumn.Add(tbGOOutputMasterDetailDisplayColumns.Text.Trim());
+                                }
+                            }
+                            _mapper.UpdateSetting(_helper.GetSetting("GOMasterDetailDisplayColumns"), String.Join(",", expandedColumn.ToArray()));
+
+                            tbGOOutputMasterDetailDisplayColumns.Text = String.Join(",", expandedColumn.ToArray());
+                            break;
+                    }
+
+                }
+                else
+                {
+                    _mapper.UpdateSetting(_helper.GetSetting("GOOutput"), "none");
+                }
+            }
+            _settings = _mapper.GetSettings(_portletId).ToList();
         }
 
         private void SetDdlConfigFiles()

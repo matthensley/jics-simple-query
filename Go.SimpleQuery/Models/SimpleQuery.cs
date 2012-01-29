@@ -7,7 +7,7 @@ namespace Go.SimpleQuery.Models
     public class SimpleQuery
     {
         public bool AllowExports { get; set; }
-        public string Action { get; set; }
+        
     }
 
     public class SimpleQueryExport : SimpleQuery
@@ -32,5 +32,6 @@ namespace Go.SimpleQuery.Models
     public class SimpleQueryLiteral: SimpleQuery
     {
         public string Html { get; set; }
+        public string Action { get; set; }
     }
 }

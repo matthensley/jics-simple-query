@@ -67,40 +67,40 @@ namespace CUS.ICS.SimpleQuery {
         protected global::System.Web.UI.WebControls.Panel pnlExport;
         
         /// <summary>
-        /// lnkExportExcel control.
+        /// lnkSQExportExcel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkExportExcel;
+        protected global::System.Web.UI.WebControls.HyperLink lnkSQExportExcel;
         
         /// <summary>
-        /// lnkExportCsv control.
+        /// lnkSQExportCsv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkExportCsv;
+        protected global::System.Web.UI.WebControls.HyperLink lnkSQExportCsv;
         
         /// <summary>
-        /// lnkExportXml control.
+        /// lnkSQExportXml control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkExportXml;
+        protected global::System.Web.UI.WebControls.HyperLink lnkSQExportXml;
         
         /// <summary>
-        /// lnkExportLiteral control.
+        /// lnkSQExportLiteral control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkExportLiteral;
+        protected global::System.Web.UI.WebControls.HyperLink lnkSQExportLiteral;
         
         /// <summary>
         /// pnlLinkDescription control.

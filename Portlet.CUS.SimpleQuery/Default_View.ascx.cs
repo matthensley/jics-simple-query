@@ -83,29 +83,29 @@ namespace CUS.ICS.SimpleQuery
                 if (_helper.GetSetting("ExportXls", false).BoolValue)
                 {
                     pnlExport.Visible = true;
-                    lnkExportExcel.Visible = true;
-                    lnkExportExcel.NavigateUrl = "Export_Data.aspx?format=xls&sqkey=" + this.ParentPortlet.Portlet.ID.AsGuid;
+                    lnkSQExportExcel.Visible = true;
+                    lnkSQExportExcel.NavigateUrl = "Export_Data.aspx?format=xls&sqkey=" + this.ParentPortlet.Portlet.ID.AsGuid;
                 }
 
                 if (_helper.GetSetting("ExportCsv", false).BoolValue)
                 {
                     pnlExport.Visible = true;
-                    lnkExportCsv.Visible = true;
-                    lnkExportCsv.NavigateUrl = "Export_Data.aspx?format=csv&sqkey=" + this.ParentPortlet.Portlet.ID.AsGuid;
+                    lnkSQExportCsv.Visible = true;
+                    lnkSQExportCsv.NavigateUrl = "Export_Data.aspx?format=csv&sqkey=" + this.ParentPortlet.Portlet.ID.AsGuid;
                 }
 
                 if (_helper.GetSetting("ExportXml", false).BoolValue)
                 {
                     pnlExport.Visible = true;
-                    lnkExportXml.Visible = true;
-                    lnkExportXml.NavigateUrl = "Export_Data.aspx?format=xml&sqkey=" + this.ParentPortlet.Portlet.ID.AsGuid;
+                    lnkSQExportXml.Visible = true;
+                    lnkSQExportXml.NavigateUrl = "Export_Data.aspx?format=xml&sqkey=" + this.ParentPortlet.Portlet.ID.AsGuid;
                 }
 
                 if (_helper.GetSetting("ExportLiteral", false).BoolValue)
                 {
                     pnlExport.Visible = true;
-                    lnkExportLiteral.Visible = true;
-                    lnkExportLiteral.NavigateUrl = "Export_Data.aspx?format=literal&sqkey=" + this.ParentPortlet.Portlet.ID.AsGuid;
+                    lnkSQExportLiteral.Visible = true;
+                    lnkSQExportLiteral.NavigateUrl = "Export_Data.aspx?format=literal&sqkey=" + this.ParentPortlet.Portlet.ID.AsGuid;
                 }
             }
 

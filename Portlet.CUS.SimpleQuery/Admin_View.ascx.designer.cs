@@ -166,6 +166,15 @@ namespace CUS.ICS.SimpleQuery {
         protected global::System.Web.UI.WebControls.CheckBox chkDisplayResultsMinimized;
         
         /// <summary>
+        /// trLinkText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow trLinkText;
+        
+        /// <summary>
         /// pLinkText control.
         /// </summary>
         /// <remarks>
@@ -182,6 +191,15 @@ namespace CUS.ICS.SimpleQuery {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbLinkText;
+        
+        /// <summary>
+        /// trLinkDescription control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow trLinkDescription;
         
         /// <summary>
         /// pDescription control.
@@ -461,6 +479,15 @@ namespace CUS.ICS.SimpleQuery {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSave;
+        
+        /// <summary>
+        /// btnSaveAndExit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSaveAndExit;
         
         /// <summary>
         /// btnCancel control.

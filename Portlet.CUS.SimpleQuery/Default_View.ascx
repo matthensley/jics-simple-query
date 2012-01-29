@@ -150,10 +150,10 @@
     </asp:Panel>
     <asp:Panel runat="server" ID="pnlExport" Visible="False">
         <span style="float:left;margin-top: 3px;padding-right: 10px;">Export To:</span>
-        <asp:HyperLink ID="lnkExportExcel" runat="server" Target="_blank" Visible="False">Excel</asp:HyperLink> 
-        <asp:HyperLink ID="lnkExportCsv" runat="server" Target="_blank"  Visible="False">CSV</asp:HyperLink> 
-        <asp:HyperLink ID="lnkExportXml" runat="server" Target="_blank" Visible="False">XML</asp:HyperLink> 
-        <asp:HyperLink ID="lnkExportLiteral" runat="server" Target="_blank" Visible="False">Literal</asp:HyperLink>
+        <asp:HyperLink ID="lnkSQExportExcel" runat="server" Target="_blank" Visible="False">Excel</asp:HyperLink> 
+        <asp:HyperLink ID="lnkSQExportCsv" runat="server" Target="_blank"  Visible="False">CSV</asp:HyperLink> 
+        <asp:HyperLink ID="lnkSQExportXml" runat="server" Target="_blank" Visible="False">XML</asp:HyperLink> 
+        <asp:HyperLink ID="lnkSQExportLiteral" runat="server" Target="_blank" Visible="False">Literal</asp:HyperLink>
     </asp:Panel>
     <asp:Panel ID="pnlLinkDescription" runat="server">
         <div class="pSection">
@@ -181,3 +181,4 @@
         </table>
     </asp:Panel>
 </div>
+<div style="clear:both"></div>

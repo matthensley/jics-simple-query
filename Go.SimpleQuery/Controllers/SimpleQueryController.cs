@@ -12,7 +12,6 @@ using CUS.ICS.SimpleQuery.Helpers;
 using CUS.ICS.SimpleQuery.Mappers;
 using Go.SimpleQuery.Models;
 using Jenzabar.Portal.Framework.Facade;
-using mobile.Helpers;
 using mobile.Controllers;
 using mobile.Infrastructure.Attributes;
 
