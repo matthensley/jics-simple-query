@@ -40,7 +40,7 @@ namespace CUS.ICS.SimpleQuery
             _goOutputTypes = new[] { rbGOOutputXML, rbGOOutputNone, rbGOOutputMasterDetail, rbGOOutputGrid, rbGOOutputCSV, rbGOOutputLiteral };
 
             // Don't show the Go settings unless it is version 1.2 or greater.
-            if (new InstalledApplicationService().GetApplicationVersion("JICS Go") >= new ApplicationVersion(1, 1, 0))
+            if (new InstalledApplicationService().IsApplicationAtLeastThisVersion("JICS Go", "1.1"))
             {
                 pnlGoSettings.Visible = true;
             }
