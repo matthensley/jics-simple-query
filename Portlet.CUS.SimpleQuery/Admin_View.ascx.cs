@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using System.Xml;
+using Jenzabar.Portal.Framework.InstalledApplications;
 using Jenzabar.Portal.Framework.Web.UI;
 using CUS.ICS.SimpleQuery.Mappers;
 using CUS.ICS.SimpleQuery.Entities;
@@ -38,6 +39,11 @@ namespace CUS.ICS.SimpleQuery
             _jicsOutputTypes = new[] { rbJICSOutputCSV, rbJICSOutputDataTables, rbJICSOutputGrid, rbJICSOutputXML, rbJICSOutputLiteral };
             _goOutputTypes = new[] { rbGOOutputXML, rbGOOutputNone, rbGOOutputMasterDetail, rbGOOutputGrid, rbGOOutputCSV, rbGOOutputLiteral };
 
+            // Don't show the Go settings unless it is version 1.2 or greater.
+            if (new InstalledApplicationService().GetApplicationVersion("JICS Go") >= new ApplicationVersion(1, 1, 0))
+            {
+                pnlGoSettings.Visible = true;
+            }
             if (IsFirstLoad)
             {
                 SetDdlConfigFiles();

@@ -2,7 +2,7 @@
     Inherits="CUS.ICS.SimpleQuery.Admin_View" %>
 <link href="<%= ResolveUrl("~/ClientConfig/css/jqueryDataTable.css") %>" rel="stylesheet"
     type="text/css" />
-    <script type="text/javascript" src="<%= ResolveUrl("~/ClientConfig/js/jquery.dataTables.js") %>"></script>
+<script type="text/javascript" src="<%= ResolveUrl("~/ClientConfig/js/jquery.dataTables.js") %>"></script>
 <script type="text/javascript">
 
     jQuery(function ($) {
@@ -151,14 +151,14 @@
             $.ajax({
                 url: PortletLocation + "Admin.ashx",
                 data: { action: "TestQuery",
-                        _connectionFile: $('#<%= ddlConfigFile.ClientID %>').val() == "" ? $('#<%= tbConfigFile.ClientID %>').val() : $('#<%= ddlConfigFile.ClientID %>').val(),
-                        _portletID: '<%= ParentPortlet.PortletDisplay.Portlet.ID.AsGuid %>',
-                        _queryString: $('#<%= txtQuery.ClientID %>').val(),
-                        _expandedColumns: $('#<%= tbJICSDataTablesExpandedColumns.ClientID %>').val(),
-                        _columnLabels: $('#<%= txtColumnLabels.ClientID %>').val(), 
-                        _queryTimeout: $('#<%= tbQueryTimeout.ClientID %>').val(),
-                        _hostId: $('#<%= tbTestHostId.ClientID %>').val()
-                    },
+                    _connectionFile: $('#<%= ddlConfigFile.ClientID %>').val() == "" ? $('#<%= tbConfigFile.ClientID %>').val() : $('#<%= ddlConfigFile.ClientID %>').val(),
+                    _portletID: '<%= ParentPortlet.PortletDisplay.Portlet.ID.AsGuid %>',
+                    _queryString: $('#<%= txtQuery.ClientID %>').val(),
+                    _expandedColumns: $('#<%= tbJICSDataTablesExpandedColumns.ClientID %>').val(),
+                    _columnLabels: $('#<%= txtColumnLabels.ClientID %>').val(),
+                    _queryTimeout: $('#<%= tbQueryTimeout.ClientID %>').val(),
+                    _hostId: $('#<%= tbTestHostId.ClientID %>').val()
+                },
                 dataType: "json",
                 type: "POST",
                 success: function (ret) {
@@ -225,12 +225,13 @@
     {
         display: none;
     }
-    #tblSettings tbody tr td
+    #tblSettings tbody tr td, #tblGoSettings tbody tr td
     {
         vertical-align: top;
     }
-    #tblSettings {
-        border: none;        
+    #tblSettings, #tblGoSettings
+    {
+        border: none;
     }
 </style>
 <div class="pContent">
@@ -245,13 +246,17 @@
         </div>
         <table cellpadding="5" id="tblSettings">
             <tr>
-                <td width="125"><strong>Query Title</strong></td>
-                <td width="350"><asp:TextBox runat="server" ID="tbQueryTitle"></asp:TextBox></td>
+                <td width="125">
+                    <strong>Query Title</strong>
+                </td>
+                <td width="350">
+                    <asp:TextBox runat="server" ID="tbQueryTitle"></asp:TextBox>
+                </td>
             </tr>
             <tr>
                 <td>
-                    <strong>Connection</strong><asp:Button ID="btnTestConnection" runat="server" Text="Test" style="float:right">
-                    </asp:Button>
+                    <strong>Connection</strong><asp:Button ID="btnTestConnection" runat="server" Text="Test"
+                        Style="float: right"></asp:Button>
                 </td>
                 <td>
                     <p>
@@ -259,7 +264,6 @@
                         </asp:DropDownList>
                         <asp:TextBox ID="tbConfigFile" runat="server"></asp:TextBox>
                     </p>
-                    
                 </td>
                 <td>
                     Provide an ODBC connection string or the name of an xml file containing the connection
@@ -271,7 +275,8 @@
             </tr>
             <tr>
                 <td>
-                    <strong>Query</strong><asp:Button ID="btnTestQuery" runat="server" Text="Test" style="float:right"></asp:Button>
+                    <strong>Query</strong><asp:Button ID="btnTestQuery" runat="server" Text="Test" Style="float: right">
+                    </asp:Button>
                 </td>
                 <td>
                     <p>
@@ -308,7 +313,8 @@
                 </td>
                 <td>
                     The number of seconds to allow the query to run without quitting. If a zero or blank
-                    value is provided, the default (usually 30 seconds) will apply.  The upper limit on a page load is 90 seconds so a timeout past that won't work.
+                    value is provided, the default (usually 30 seconds) will apply. The upper limit
+                    on a page load is 90 seconds so a timeout past that won't work.
                 </td>
             </tr>
             <tr>
@@ -319,7 +325,8 @@
                     <asp:TextBox runat="server" ID="tbRowLimit"></asp:TextBox>
                 </td>
                 <td>
-                    This will limit the number of rows returned to the screen, but will <em>not</em> limit the number of rows returned in an export. If blank or 0, no limit is enforced.
+                    This will limit the number of rows returned to the screen, but will <em>not</em>
+                    limit the number of rows returned in an export. If blank or 0, no limit is enforced.
                 </td>
             </tr>
             <tr>
@@ -364,7 +371,8 @@
                 <td>
                     <p>
                         Format:
-                        <asp:TextBox runat="server" ID="tbExportLiteralPattern" TextMode="MultiLine" Rows="3" Columns="40"></asp:TextBox></p>
+                        <asp:TextBox runat="server" ID="tbExportLiteralPattern" TextMode="MultiLine" Rows="3"
+                            Columns="40"></asp:TextBox></p>
                 </td>
                 <td>
                     <p>
@@ -383,21 +391,29 @@
                     <strong>Portlet Display</strong>
                 </td>
                 <td>
-                    <asp:CheckBox runat="server" ID="chkDisplayResultsMinimized" Text="Show results in both Minimized and Maximized View"/>
+                    <asp:CheckBox runat="server" ID="chkDisplayResultsMinimized" Text="Show results in both Minimized and Maximized View" />
                 </td>
-                <td>If not set, a link and description will be shown in the mimized view.</td>
+                <td>
+                    If not set, a link and description will be shown in the mimized view.
+                </td>
             </tr>
             <tr id="trLinkText" runat="server">
-                <td><strong>Link Text </strong></td>
+                <td>
+                    <strong>Link Text </strong>
+                </td>
                 <td>
                     <p id="pLinkText" runat="server">
                         <asp:TextBox runat="server" ID="tbLinkText" Columns="40"></asp:TextBox>
                     </p>
                 </td>
-                <td>Uses &quot;Show Results&quot; if not set</td>
+                <td>
+                    Uses &quot;Show Results&quot; if not set
+                </td>
             </tr>
             <tr id="trLinkDescription" runat="server">
-                <td><strong>Description</strong></td>
+                <td>
+                    <strong>Description</strong>
+                </td>
                 <td>
                     <p id="pDescription" runat="server">
                         <asp:TextBox runat="server" ID="tbDescription" Rows="7" Columns="40" TextMode="MultiLine"></asp:TextBox>
@@ -417,27 +433,26 @@
                     <strong>Output Settings:</strong>
                 </td>
                 <td>
-                    <asp:CheckBox runat="server" ID="chkJICSAsync" Text="Use Asynchronous Loading" /><br /><br/>
+                    <asp:CheckBox runat="server" ID="chkJICSAsync" Text="Use Asynchronous Loading" /><br />
+                    <br />
                     <input type="radio" id="rbJICSOutputGrid" name="rbJICSOutput" value="grid" runat="server" />
                     <label for="<%= rbJICSOutputGrid.ClientID %>">
                         Plain Grid</label><br />
-                    <div id="divJICSOutputGridSettings" runat="server" style="margin-left:20px;">
+                    <div id="divJICSOutputGridSettings" runat="server" style="margin-left: 20px;">
                         <asp:CheckBox runat="server" ID="chkJICSShowColumnHeadings" Text="Show Column Headings" /><br />
                         <asp:CheckBox runat="server" ID="chkJICSGridShowGridlines" Text="Show Gridlines" /><br />
                         Cell Padding:
                         <asp:TextBox runat="server" ID="tbJICSGridCellPadding"></asp:TextBox><br />
                         <asp:CheckBox runat="server" ID="chkJICSGridAltRowColors" Text="Use Alternating Row Colors" /><br />
-                        
                     </div>
                     <input type="radio" id="rbJICSOutputDataTables" name="rbJICSOutput" value="datatables"
                         runat="server" />
                     <label for="<%= rbJICSOutputDataTables.ClientID %>">
                         Dynamic Data Table</label><br />
-                    <div id="divJICSOutputDataTablesSettings" runat="server" style="margin-left:20px;">
+                    <div id="divJICSOutputDataTablesSettings" runat="server" style="margin-left: 20px;">
                         Expanded Display Columns
                         <asp:TextBox runat="server" ID="tbJICSDataTablesExpandedColumns"></asp:TextBox>
                     </div>
-                    
                     <input type="radio" id="rbJICSOutputXML" name="rbJICSOutput" value="xml" runat="server" />
                     <label for="<%= rbJICSOutputXML.ClientID %>">
                         XML</label><br />
@@ -454,75 +469,81 @@
                     <strong>Dynamic Data Table</strong> presents query results in a sortable, searchable,
                     paged grid using jQuery DataTables. This will ignore any table formatting specified
                     in portlet Settings.<br />
-                    <strong>Literal:</strong> If set, the literal format set under the Export options will be used.
-                </td>
-            </tr>
-             <tr>
-                <td colspan="3">
-                    <h4>
-                        JICS Go Display</h4>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    &nbsp;
-                </td>
-                <td>
-                    <asp:CheckBox runat="server" ID="chkGOAllowExports" Text="Allow Exports" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <strong>Output Settings:</strong>
-                </td>
-                <td>
-                    <input type="radio" id="rbGOOutputNone" name="rbGOOutput" value="none" runat="server" />
-                    <label for="<%= rbGOOutputNone.ClientID %>">None</label><br />
-                    <input type="radio" id="rbGOOutputGrid" name="rbGOOutput" value="grid" runat="server" />
-                    <label for="<%= rbGOOutputGrid.ClientID %>">
-                        Plain Grid</label><br />
-                    <div id="divGOOutputGridSettings" runat="server" style="margin-left:20px;">
-                        <asp:CheckBox runat="server" ID="chkGOGridShowColumnHeadings" Text="Show Column Headings" /><br />
-                        <asp:CheckBox runat="server" ID="chkGOGridShowGridlines" Text="Show Gridlines" /><br />
-                        Cell Padding:
-                        <asp:TextBox runat="server" ID="tbGOGridCellPadding"></asp:TextBox><br />
-                        <asp:CheckBox runat="server" ID="chkGOGridAltRowColors" Text="Use Alternating Row Colors" /><br />
-                    </div>
-                    <input type="radio" id="rbGOOutputMasterDetail" name="rbGOOutput" value="masterdetail"
-                        runat="server" />
-                    <label for="<%= rbGOOutputMasterDetail.ClientID %>">
-                        Master-Detail</label><br />
-                    <div id="divGOOutputMasterDetailSettings" runat="server" style="margin-left: 20px;">
-                        Detail Display Columns
-                        <asp:TextBox runat="server" ID="tbGOOutputMasterDetailDisplayColumns"></asp:TextBox>
-                    </div>
-                    <input type="radio" id="rbGOOutputXML" name="rbGOOutput" value="xml" runat="server" />
-                    <label for="<%= rbGOOutputXML.ClientID %>">
-                        XML</label><br />
-                    <input type="radio" id="rbGOOutputCSV" name="rbGOOutput" value="csv" runat="server" />
-                    <label for="<%= rbGOOutputCSV.ClientID %>">
-                        CSV</label><br />
-                    <input type="radio" id="rbGOOutputLiteral" name="rbGOOutput" value="literal"
-                        runat="server" />
-                    <label for="<%= rbGOOutputLiteral.ClientID %>">
-                        Literal</label>
-                </td>
-                <td>
-                    <strong>Plain Grid</strong> shows the data in a simple static table on the page.<br />
-                    <strong>Master-Detail Mode</strong> presents results with the first column being displayed only.  On tap (click) the rest of the columns specified in "Detail Display Columns" are shown.
-                    <strong>Literal:</strong> If set, the literal format set under the Export options will be used.
-                </td>
-            </tr>
-            <tr>
-                <td colspan="3" style="text-align: center;">
-                    
-                    <asp:Button ID="btnSave" runat="server" Text="Save"></asp:Button>
-                    <asp:Button runat="server" ID="btnSaveAndExit" Text="Save and Exit"/>
-                    <asp:Button ID="btnCancel" runat="server" Text="Exit"></asp:Button>
-                    
+                    <strong>Literal:</strong> If set, the literal format set under the Export options
+                    will be used.
                 </td>
             </tr>
         </table>
+        <asp:Panel runat="server" ID="pnlGoSettings" Visible="False">
+            <table cellpadding="5"  id="tblGoSettings">
+                <tr>
+                    <td colspan="3">
+                        <h4>
+                            JICS Go Display</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="125">
+                        &nbsp;
+                    </td>
+                    <td width="350">
+                        <asp:CheckBox runat="server" ID="chkGOAllowExports" Text="Allow Exports" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Output Settings:</strong>
+                    </td>
+                    <td>
+                        <input type="radio" id="rbGOOutputNone" name="rbGOOutput" value="none" runat="server" />
+                        <label for="<%= rbGOOutputNone.ClientID %>">
+                            None</label><br />
+                        <input type="radio" id="rbGOOutputGrid" name="rbGOOutput" value="grid" runat="server" />
+                        <label for="<%= rbGOOutputGrid.ClientID %>">
+                            Plain Grid</label><br />
+                        <div id="divGOOutputGridSettings" runat="server" style="margin-left: 20px;">
+                            <asp:CheckBox runat="server" ID="chkGOGridShowColumnHeadings" Text="Show Column Headings" /><br />
+                            <asp:CheckBox runat="server" ID="chkGOGridShowGridlines" Text="Show Gridlines" /><br />
+                            Cell Padding:
+                            <asp:TextBox runat="server" ID="tbGOGridCellPadding"></asp:TextBox><br />
+                            <asp:CheckBox runat="server" ID="chkGOGridAltRowColors" Text="Use Alternating Row Colors" /><br />
+                        </div>
+                        <input type="radio" id="rbGOOutputMasterDetail" name="rbGOOutput" value="masterdetail"
+                            runat="server" />
+                        <label for="<%= rbGOOutputMasterDetail.ClientID %>">
+                            Master-Detail</label><br />
+                        <div id="divGOOutputMasterDetailSettings" runat="server" style="margin-left: 20px;">
+                            Detail Display Columns
+                            <asp:TextBox runat="server" ID="tbGOOutputMasterDetailDisplayColumns"></asp:TextBox>
+                        </div>
+                        <input type="radio" id="rbGOOutputXML" name="rbGOOutput" value="xml" runat="server" />
+                        <label for="<%= rbGOOutputXML.ClientID %>">
+                            XML</label><br />
+                        <input type="radio" id="rbGOOutputCSV" name="rbGOOutput" value="csv" runat="server" />
+                        <label for="<%= rbGOOutputCSV.ClientID %>">
+                            CSV</label><br />
+                        <input type="radio" id="rbGOOutputLiteral" name="rbGOOutput" value="literal" runat="server" />
+                        <label for="<%= rbGOOutputLiteral.ClientID %>">
+                            Literal</label>
+                    </td>
+                    <td>
+                        <strong>Plain Grid</strong> shows the data in a simple static table on the page.<br />
+                        <strong>Master-Detail Mode</strong> presents results with the first column being
+                        displayed only. On tap (click) the rest of the columns specified in "Detail Display
+                        Columns" are shown. <strong>Literal:</strong> If set, the literal format set under
+                        the Export options will be used.
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align: center;">
+                        <asp:Button ID="btnSave" runat="server" Text="Save"></asp:Button>
+                        <asp:Button runat="server" ID="btnSaveAndExit" Text="Save and Exit" />
+                        <asp:Button ID="btnCancel" runat="server" Text="Exit"></asp:Button>
+                    </td>
+                </tr>
+            </table>
+        </asp:Panel>
     </div>
 </div>
-<div style="clear:both"></div>
+<div style="clear: both">
+</div>
