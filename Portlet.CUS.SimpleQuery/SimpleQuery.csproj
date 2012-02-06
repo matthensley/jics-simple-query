@@ -232,8 +232,7 @@ goto :exit
 
 :Dist
 
-RMDIR /S /Q "$(ProjectDir)bin"
-RMDIR /S /Q "$(ProjectDir)obj" 
+
 
 :exit</PostBuildEvent>
   </PropertyGroup>
