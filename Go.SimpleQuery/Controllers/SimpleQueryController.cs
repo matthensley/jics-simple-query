@@ -21,8 +21,7 @@ namespace Go.SimpleQuery.Controllers
     public class SimpleQueryController : Controller
     {
         private readonly IPortalUserFacade _userFacade;
-        private readonly NHSimpleQuerySettingsMapper _mapper;
-
+        private readonly NHSimpleQuerySettingsMapper _mapper; 
         public SimpleQueryController(IPortalUserFacade userFacade)
         {
             _userFacade = userFacade;
@@ -92,14 +91,16 @@ namespace Go.SimpleQuery.Controllers
                                       };
                     return View("MasterDetail", mdmodel);
                     break;
-                case "none":
-                    return View("Error", new Error { ErrorMessage = "Results for this portlet are not enabled for JICS Go" });
                 case "xml":
                     return Xml(cid, iPrincipal);
                 case "csv":
                     return Csv(cid, iPrincipal);
                 case "literal":
                     return Literal(cid, iPrincipal);
+                case "none":
+                    return View("Error", new Error { ErrorMessage = "Results for this portlet are not enabled for JICS Go" });
+                default:
+                    return View("Error", new Error { ErrorMessage = "This portlet has not yet been configured." });
             }
 
             //DataTable dt = GetData(helper);
