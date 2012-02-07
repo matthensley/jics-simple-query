@@ -133,9 +133,9 @@ namespace CUS.ICS.SimpleQuery
                             DataTable dt;
                             var qt = 0;
                             if (Int32.TryParse(_queryTimeout, out qt) && qt > 0)
-                                dt = odbcConn.ConnectToERP(fqs.FilledQueryString, ref exError, qt);
+                                dt = odbcConn.ConnectToERP(fqs.FilledQueryString(), ref exError, qt);
                             else
-                                dt = odbcConn.ConnectToERP(fqs.FilledQueryString, ref exError);
+                                dt = odbcConn.ConnectToERP(fqs.FilledQueryString(), ref exError);
                             if (exError != null)
                             {
                                 return new

@@ -258,9 +258,9 @@ namespace CUS.ICS.SimpleQuery
             {
                 var queryStringFiller = new FillQueryString(_helper.GetSetting("QueryText").Value);
                 if (Convert.ToInt16(_helper.GetSetting("QueryTimeout", 0).Value) > 0)
-                    return odbcConn.ConnectToERP(queryStringFiller.FilledQueryString, ref ex, Convert.ToInt16(_helper.GetSetting("QueryTimeout").Value));
+                    return odbcConn.ConnectToERP(queryStringFiller.FilledQueryString(), ref ex, Convert.ToInt16(_helper.GetSetting("QueryTimeout").Value));
                 else
-                    return odbcConn.ConnectToERP(queryStringFiller.FilledQueryString, ref ex);
+                    return odbcConn.ConnectToERP(queryStringFiller.FilledQueryString(), ref ex);
             }
             catch (Exception ee)
             {

@@ -65,7 +65,6 @@ namespace Go.SimpleQuery.Controllers
                                         Data = dt
                                     };
                     return View("DataGrid", gridmodel);
-                    break;
                 case "masterdetail":
                     List<SimpleQueryDataRow> dataRows;
                     try
@@ -90,7 +89,6 @@ namespace Go.SimpleQuery.Controllers
                                           MasterDetailData = dataRows
                                       };
                     return View("MasterDetail", mdmodel);
-                    break;
                 case "xml":
                     return Xml(cid, iPrincipal);
                 case "csv":
@@ -102,9 +100,6 @@ namespace Go.SimpleQuery.Controllers
                 default:
                     return View("Error", new Error { ErrorMessage = "This portlet has not yet been configured." });
             }
-
-            //DataTable dt = GetData(helper);
-            return View();
         }
 
         public ActionResult Xml(ContentIdentifier cid, IPrincipal iPrincipal)
@@ -228,71 +223,84 @@ namespace Go.SimpleQuery.Controllers
                                                 : String.Empty
                                     });
                 }
-                var mstream = new MemoryStream();
-                var sw = new StreamWriter(mstream);
                 var strContentType = "text/plain"; // these defaults will be overwritten if we're successful
                 var strFilename = "ErrorOutput.txt";
-                string fileName;
-                if (helper.GetSetting("QueryTitle").Value.Trim().Length > 0)
-                    fileName = Regex.Replace(helper.GetSetting("QueryTitle").Value.Trim(), @"\W", "");//remove non-alphanumeric characters from filename
-                else
-                    fileName = "ExportedData";
-
-                switch (fileType)
+                byte[] byteArray;
+                using (var mstream = new MemoryStream())
                 {
-                    case "Xls":
-                        var dgResults = OutputHelper.CreateDataGrid();
 
-                        OutputHelper.ConfigureDataGrid(ref dgResults,
-                                                            dt,
-                                                            helper.GetSetting("GOGridShowColumnHeadings", false).BoolValue,
-                                                            helper.GetSetting("GOGridAltRowColors", false).BoolValue,
-                                                            helper.GetSetting("GOGridShowGridlines", false).BoolValue,
-                                                            Convert.ToInt16(helper.GetSetting("GOGridCellPadding", 5).Value),
-                                                            helper.GetSetting("ColumnLabels").Value);
+                    using (var sw = new StreamWriter(mstream))
+                    {
+                        string fileName;
+                        if (helper.GetSetting("QueryTitle").Value.Trim().Length > 0)
+                            fileName = Regex.Replace(helper.GetSetting("QueryTitle").Value.Trim(), @"\W", "");
+                            //remove non-alphanumeric characters from filename
+                        else
+                            fileName = "ExportedData";
+
+                        switch (fileType)
+                        {
+                            case "Xls":
+                                var dgResults = OutputHelper.CreateDataGrid();
+
+                                OutputHelper.ConfigureDataGrid(ref dgResults,
+                                                               dt,
+                                                               helper.GetSetting("GOGridShowColumnHeadings", false).
+                                                                   BoolValue,
+                                                               helper.GetSetting("GOGridAltRowColors", false).BoolValue,
+                                                               helper.GetSetting("GOGridShowGridlines", false).BoolValue,
+                                                               Convert.ToInt16(
+                                                                   helper.GetSetting("GOGridCellPadding", 5).Value),
+                                                               helper.GetSetting("ColumnLabels").Value);
 
 
-                        dgResults.DataSource = dt;
-                        dgResults.DataBind();
+                                dgResults.DataSource = dt;
+                                dgResults.DataBind();
 
-                        var stringWrite = new StringWriter();
-                        var htmlWrite = new HtmlTextWriter(stringWrite);
-                        dgResults.RenderControl(htmlWrite);
+                                var stringWrite = new StringWriter();
+                                var htmlWrite = new HtmlTextWriter(stringWrite);
+                                dgResults.RenderControl(htmlWrite);
 
-                        htmlWrite.Flush();
+                                htmlWrite.Flush();
 
-                        sw.WriteLine(stringWrite.ToString().Replace("\n", "").Replace("\r", "").Replace("  ", ""));
-                        strContentType = "application/vnd.ms-excel";
-                        strFilename = fileName + ".xls";
-                        break;
-                    case "Xml":
-                        sw.WriteLine(OutputHelper.RenderXml(dt));
-                        strContentType = "text/xml";
-                        strFilename = fileName + ".xml";
-                        break;
-                    case "Csv":
-                        sw.WriteLine(OutputHelper.RenderCsv(dt,
-                                                      helper.GetSetting("GOGridShowColumnHeadings", false).BoolValue,
-                                                      helper.GetSetting("ColumnLabels").Value));
-                        strContentType = "text/csv";
-                        strFilename = fileName + ".csv";
-                        break;
-                    case "Literal":
-                        sw.WriteLine(OutputHelper.RenderLiteral(dt, helper.GetSetting("ExportLiteralPattern", "{0}").Value));
-                        strContentType = "text/plain";
-                        strFilename = fileName + ".txt";
-                        break;
+                                sw.WriteLine(stringWrite.ToString().Replace("\n", "").Replace("\r", "").Replace("  ", ""));
+                                strContentType = "application/vnd.ms-excel";
+                                strFilename = fileName + ".xls";
+                                break;
+                            case "Xml":
+                                sw.WriteLine(OutputHelper.RenderXml(dt));
+                                strContentType = "text/xml";
+                                strFilename = fileName + ".xml";
+                                break;
+                            case "Csv":
+                                sw.WriteLine(OutputHelper.RenderCsv(dt,
+                                                                    helper.GetSetting("GOGridShowColumnHeadings", false)
+                                                                        .
+                                                                        BoolValue,
+                                                                    helper.GetSetting("ColumnLabels").Value));
+                                strContentType = "text/csv";
+                                strFilename = fileName + ".csv";
+                                break;
+                            case "Literal":
+                                sw.WriteLine(OutputHelper.RenderLiteral(dt,
+                                                                        helper.GetSetting("ExportLiteralPattern", "{0}")
+                                                                            .
+                                                                            Value));
+                                strContentType = "text/plain";
+                                strFilename = fileName + ".txt";
+                                break;
 
+                        }
+
+                        sw.Flush();
+                        sw.Close();
+
+                        byteArray = mstream.ToArray();
+
+                        mstream.Flush();
+                        mstream.Close();
+                    }
                 }
-
-                sw.Flush();
-                sw.Close();
-
-                byte[] byteArray = mstream.ToArray();
-
-                mstream.Flush();
-                mstream.Close();
-
                 return File(byteArray, strContentType, strFilename);
             }
 
@@ -341,9 +349,9 @@ namespace Go.SimpleQuery.Controllers
                                                                                _userFacade.FindByUsername(username));
             DataTable dt;
             if (Convert.ToInt16(helper.GetSetting("QueryTimeout", 0).Value) > 0)
-                dt = odbcConn.ConnectToERP(queryStringFiller.FilledQueryString, ref ex, Convert.ToInt16(helper.GetSetting("QueryTimeout").Value));
+                dt = odbcConn.ConnectToERP(queryStringFiller.FilledQueryString(), ref ex, Convert.ToInt16(helper.GetSetting("QueryTimeout").Value));
             else
-                dt =  odbcConn.ConnectToERP(queryStringFiller.FilledQueryString, ref ex);
+                dt =  odbcConn.ConnectToERP(queryStringFiller.FilledQueryString(), ref ex);
             if (ex != null)
             {
                 throw ex;

@@ -34,4 +34,21 @@ namespace Go.SimpleQuery.Models
         public string Html { get; set; }
         public string Action { get; set; }
     }
+
+    public class SimpleQueryDataRow
+    {
+        public string Master { get; set; }
+        public List<SimpleQueryDataColumn> Details { get; set; }
+
+        public SimpleQueryDataRow()
+        {
+            Details = new List<SimpleQueryDataColumn>();
+        }
+    }
+
+    public class SimpleQueryDataColumn
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
+    }
 }

@@ -135,6 +135,7 @@
       <DependentUpon>Export_Data.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Helpers\CommonPluginService.cs" />
     <Compile Include="Helpers\FillQueryString.cs" />
     <Compile Include="Helpers\FormatXml.cs" />
     <Compile Include="Helpers\JSDataTable.cs" />
