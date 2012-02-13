@@ -41,6 +41,9 @@ namespace Go.SimpleQuery.Controllers
                     try
                     {
                         dt = GetData(helper, iPrincipal.Identity.Name);
+
+                        if (Convert.ToInt32(helper.GetSetting("RowLimit", 0).Value) > 0)
+                            dt = dt.AsEnumerable().Take(Convert.ToInt32(helper.GetSetting("RowLimit", 0).Value)).CopyToDataTable();
                     }
                     catch (Exception ex)
                     {
@@ -379,6 +382,10 @@ namespace Go.SimpleQuery.Controllers
         {
             var ret = new List<SimpleQueryDataRow>();
             var dt = GetData(helper, username);
+
+            if (Convert.ToInt32(helper.GetSetting("RowLimit", 0).Value) > 0)
+                dt = dt.AsEnumerable().Take(Convert.ToInt32(helper.GetSetting("RowLimit", 0).Value)).CopyToDataTable();
+
             var detailColumns = helper.GetSetting("GOMasterDetailDisplayColumns").Value.Split(',');
             var columnLabels = helper.GetSetting("ColumnLabels").Value.Split(',');
 

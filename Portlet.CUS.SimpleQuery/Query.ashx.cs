@@ -96,6 +96,9 @@ namespace CUS.ICS.SimpleQuery
                         if (_helper.GetSetting("JICSAllowExports").BoolValue)
                             HttpContext.Current.Session["sqhtml+" + PortalUser.Current.ID.AsGuid + _portletID] = dt;
 
+                        if (Convert.ToInt32(_helper.GetSetting("RowLimit", 0).Value) > 0)
+                            dt = dt.AsEnumerable().Take(Convert.ToInt32(_helper.GetSetting("RowLimit", 0).Value)).CopyToDataTable();
+
                         var jsdtc = new JSDataTableConverter(dt, _helper.GetSetting("JICSDataTablesExpandedColumns").Value.Split(','), _helper.GetSetting("ColumnLabels").Value.Split(','));
 
                         var data = jsdtc.GetJsDataTable();
@@ -164,6 +167,9 @@ namespace CUS.ICS.SimpleQuery
                         {
                             if (_helper.GetSetting("JICSAllowExports").BoolValue)
                                 HttpContext.Current.Session["sqhtml+" + PortalUser.Current.ID.AsGuid + _portletID] = dt;
+
+                            if (Convert.ToInt32(_helper.GetSetting("RowLimit", 0).Value) > 0)
+                                dt = dt.AsEnumerable().Take(Convert.ToInt32(_helper.GetSetting("RowLimit", 0).Value)).CopyToDataTable();
 
                             switch (_helper.GetSetting("JICSOutput", "grid").Value)
                             {
