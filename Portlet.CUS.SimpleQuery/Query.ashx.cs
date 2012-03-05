@@ -1,24 +1,15 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Web.UI.WebControls;
-using System.Xml;
 using Jenzabar.Common;
-using Jenzabar.ICS.Web.Portlets.Common;
 using Jenzabar.Portal.Framework;
 using Jenzabar.Portal.Framework.Facade;
 using CUS.ICS.SimpleQuery.Helpers;
 using CUS.ICS.SimpleQuery.Mappers;
-using CUS.ICS.SimpleQuery.Entities;
 using System.Web.SessionState;
-using Jenzabar.Portal.Framework.Web.UI;
 
 namespace CUS.ICS.SimpleQuery
 {
@@ -79,7 +70,7 @@ namespace CUS.ICS.SimpleQuery
 
                     var mapper = new NHSimpleQuerySettingsMapper();
                     var settings = mapper.GetSettings(_portletID).ToList();
-                    var _helper = new SettingsHelper(settings, _portletID, mapper);
+                    var helper = new SettingsHelper(settings, _portletID, mapper);
 
                     try
                     {
@@ -93,13 +84,13 @@ namespace CUS.ICS.SimpleQuery
                             };
                         }
 
-                        if (_helper.GetSetting("JICSAllowExports").BoolValue)
+                        if (helper.GetSetting("JICSAllowExports").BoolValue)
                             HttpContext.Current.Session["sqhtml+" + PortalUser.Current.ID.AsGuid + _portletID] = dt;
 
-                        if (Convert.ToInt32(_helper.GetSetting("RowLimit", 0).Value) > 0)
-                            dt = dt.AsEnumerable().Take(Convert.ToInt32(_helper.GetSetting("RowLimit", 0).Value)).CopyToDataTable();
+                        if (Convert.ToInt32(helper.GetSetting("RowLimit", 0).Value) > 0)
+                            dt = dt.AsEnumerable().Take(Convert.ToInt32(helper.GetSetting("RowLimit", 0).Value)).CopyToDataTable();
 
-                        var jsdtc = new JSDataTableConverter(dt, _helper.GetSetting("JICSDataTablesExpandedColumns").Value.Split(','), _helper.GetSetting("ColumnLabels").Value.Split(','));
+                        var jsdtc = new JSDataTableConverter(dt, helper.GetSetting("JICSDataTablesExpandedColumns").Value.Split(','), helper.GetSetting("ColumnLabels").Value.Split(','));
 
                         var data = jsdtc.GetJsDataTable();
 

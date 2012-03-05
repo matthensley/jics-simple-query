@@ -18,7 +18,7 @@
             message: $('#<%= message.ClientID %>'),
             loading: $('#<%= lnbGetData.ClientID %>')
         };
-        
+
         function fnFormatDetails(nTr, aoColumns, oTable) {
 
             var aData = oTable.fnGetData(nTr);
@@ -129,12 +129,17 @@
         float: right;
         height: 28px;
         margin-bottom: 5px;
-        padding-left: 5px;   
+        padding-left: 5px;
+        margin-top: 5px;
     }
     #<%= pnlExport.ClientID %> a
     {
         float: left;
         background-image: none !important;
+        margin-left: 5px;   
+        margin-right: 5px;
+        margin-top: 5px;
+        padding: 0px !important;
     }
 </style>
 <div class="pContent">
@@ -149,7 +154,7 @@
         </h4>
     </asp:Panel>
     <asp:Panel runat="server" ID="pnlExport" Visible="False">
-        <span style="float: left; margin-top: 3px; padding-right: 10px;">Export To:</span>
+        <span style="float: left; margin-top: 5px; padding-right: 10px;">Export To:</span>
         <asp:HyperLink ID="lnkSQExportExcel" runat="server" Target="_blank" Visible="False">Excel</asp:HyperLink>
         <asp:HyperLink ID="lnkSQExportCsv" runat="server" Target="_blank" Visible="False">CSV</asp:HyperLink>
         <asp:HyperLink ID="lnkSQExportXml" runat="server" Target="_blank" Visible="False">XML</asp:HyperLink>
