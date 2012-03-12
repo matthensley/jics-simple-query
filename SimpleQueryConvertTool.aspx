@@ -15,7 +15,7 @@
   by Carey Morgan
   */
   string toolName = "Simple Query Portlet Data Converter";
-  string toolDesc = "Copies Simple Query portlet data from versions 3.0 and earlier into new 3.1 data structures, and optionally cleans up the old data.";
+  string toolDesc = "Copies Simple Query portlet data from versions 3.0 and earlier into new 3.1 data structures.";
 %>
 
 <script runat="server">
