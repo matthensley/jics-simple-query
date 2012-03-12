@@ -67,7 +67,7 @@
                     if (ret.d.success) {
                         //data = ret.d.data;
                         //columns = ret.d.columns;
-                        var oTable = controls.datatable.dataTable({ "sPaginationType": "full_numbers", "aaData": ret.d.data, "aoColumns": ret.d.columns, "aaSorting": [] });
+                        var oTable = controls.datatable.dataTable({ "sPaginationType": "full_numbers", "aaData": ret.d.data, "aoColumns": ret.d.columns, "aaSorting": [], "bJQueryUI": true });
 
                         controls.datatable.find('img').live('click', function () {
                             var nTr = this.parentNode.parentNode;
@@ -153,38 +153,39 @@
             <asp:Label ID="lblQueryTitle" runat="server"></asp:Label>
         </h4>
     </asp:Panel>
-    <asp:Panel runat="server" ID="pnlExport" Visible="False">
-        <span style="float: left; margin-top: 5px; padding-right: 10px;">Export To:</span>
-        <asp:HyperLink ID="lnkSQExportExcel" runat="server" Target="_blank" Visible="False">Excel</asp:HyperLink>
-        <asp:HyperLink ID="lnkSQExportCsv" runat="server" Target="_blank" Visible="False">CSV</asp:HyperLink>
-        <asp:HyperLink ID="lnkSQExportXml" runat="server" Target="_blank" Visible="False">XML</asp:HyperLink>
-        <asp:HyperLink ID="lnkSQExportLiteral" runat="server" Target="_blank" Visible="False">Literal</asp:HyperLink>
-    </asp:Panel>
-    <asp:Panel ID="pnlLinkDescription" runat="server">
-        <div class="pSection">
-            <asp:LinkButton ID="lnkViewResults" runat="server"></asp:LinkButton>
-            <asp:Label ID="lblQueryDescription" runat="server"></asp:Label></div>
-    </asp:Panel>
-    <div id="message2" class="feedbackMessage" runat="server" visible="false">
-    </div>
-    <asp:LinkButton ID="lnbGetData" runat="server" Text="Loading..." Visible="false"></asp:LinkButton>
-    <div id="divSQResults" runat="server" style="float: left;">
-    </div>
-    <asp:Panel ID="pnlResults" runat="server" Style="float: left;">
-        <div class="pSection">
-            <asp:DataGrid ID="dgResults" runat="server" Width="" PageSize="30" BorderWidth="1px"
-                BorderStyle="Solid" BorderColor="#E0E0E0">
-                <AlternatingItemStyle BackColor="#E0E0E0"></AlternatingItemStyle>
-                <HeaderStyle Font-Bold="True"></HeaderStyle>
-            </asp:DataGrid>
-            <asp:Literal ID="preformattedResults" runat="server"></asp:Literal>
+    <div class="pSection">
+        <asp:Panel runat="server" ID="pnlExport" Visible="False">
+            <span style="float: left; margin-top: 5px; padding-right: 10px;">Export To:</span>
+            <asp:HyperLink ID="lnkSQExportExcel" runat="server" Target="_blank" Visible="False">Excel</asp:HyperLink>
+            <asp:HyperLink ID="lnkSQExportCsv" runat="server" Target="_blank" Visible="False">CSV</asp:HyperLink>
+            <asp:HyperLink ID="lnkSQExportXml" runat="server" Target="_blank" Visible="False">XML</asp:HyperLink>
+            <asp:HyperLink ID="lnkSQExportLiteral" runat="server" Target="_blank" Visible="False">Literal</asp:HyperLink>
+        </asp:Panel>
+        <asp:Panel ID="pnlLinkDescription" runat="server">
+            <div class="pSection">
+                <asp:LinkButton ID="lnkViewResults" runat="server"></asp:LinkButton>
+                <asp:Label ID="lblQueryDescription" runat="server"></asp:Label></div>
+        </asp:Panel>
+        <div id="message2" class="feedbackMessage" runat="server" visible="false">
         </div>
-    </asp:Panel>
-    <asp:Panel ID="pnlDataTableResults" runat="server" Visible="false">
-        <table id="tblDataTable" runat="server" cellpadding="0" cellspacing="0" border="0"
-            class="display">
-        </table>
-    </asp:Panel>
+        <asp:LinkButton ID="lnbGetData" runat="server" Text="Loading..." Visible="false"></asp:LinkButton>
+        <asp:Panel ID="pnlResults" runat="server" Style="float: left;">
+            <div class="pSection">
+                <asp:DataGrid ID="dgResults" runat="server" Width="" PageSize="30" BorderWidth="1px"
+                    BorderStyle="Solid" BorderColor="#E0E0E0">
+                    <AlternatingItemStyle BackColor="#E0E0E0"></AlternatingItemStyle>
+                    <HeaderStyle Font-Bold="True"></HeaderStyle>
+                </asp:DataGrid>
+                <asp:Literal ID="preformattedResults" runat="server"></asp:Literal>
+            </div>
+        </asp:Panel>
+        <div id="divSQResults" runat="server" style="float: left;"></div>
+        <asp:Panel ID="pnlDataTableResults" runat="server" Visible="false">
+            <table id="tblDataTable" runat="server" cellpadding="0" cellspacing="0" border="0"
+                class="display">
+            </table>
+        </asp:Panel>
+    </div>
 </div>
 <div style="clear: both">
 </div>

@@ -2,7 +2,7 @@
     Inherits="CUS.ICS.SimpleQuery.Admin_View" %>
 <link href="<%= ResolveUrl("~/ClientConfig/css/jqueryDataTable.css") %>" rel="stylesheet"
     type="text/css" />
-<script type="text/javascript" src="<%= ResolveUrl("~/ClientConfig/js/jquery.dataTables.js") %>"></script>
+<script type="text/javascript" src="<%= ResolveUrl("~/ClientConfig/js/jquery.dataTables.min.js") %>"></script>
 <script type="text/javascript">
 
     jQuery(function ($) {
@@ -192,7 +192,7 @@
         }
 
         function ViewResults() {
-            $('#tblDataTable').dataTable({ "sPaginationType": "full_numbers", "aaData": data, "aoColumns": columns, "aaSorting": [] });
+            $('#tblDataTable').dataTable({ "sPaginationType": "full_numbers", "aaData": data, "aoColumns": columns, "aaSorting": [], "bJQueryUI": true });
             $('#divViewResults').dialog({
                 title: 'Results',
                 close: function () {
@@ -467,15 +467,14 @@
                 <td>
                     <strong>Plain Grid</strong> shows the data in a simple static table on the page.<br />
                     <strong>Dynamic Data Table</strong> presents query results in a sortable, searchable,
-                    paged grid using jQuery DataTables. This will ignore any table formatting specified
-                    in portlet Settings.<br />
+                    paged grid using jQuery DataTables.<br />
                     <strong>Literal:</strong> If set, the literal format set under the Export options
                     will be used.
                 </td>
             </tr>
         </table>
         <asp:Panel runat="server" ID="pnlGoSettings" Visible="False">
-            <table cellpadding="5"  id="tblGoSettings">
+            <table cellpadding="5" id="tblGoSettings">
                 <tr>
                     <td colspan="3">
                         <h4>
@@ -530,19 +529,21 @@
                         <strong>Plain Grid</strong> shows the data in a simple static table on the page.<br />
                         <strong>Master-Detail Mode</strong> presents results with the first column being
                         displayed only. On tap (click) the rest of the columns specified in "Detail Display
-                        Columns" are shown. <strong>Literal:</strong> If set, the literal format set under
-                        the Export options will be used.
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3" style="text-align: center;">
-                        <asp:Button ID="btnSave" runat="server" Text="Save"></asp:Button>
-                        <asp:Button runat="server" ID="btnSaveAndExit" Text="Save and Exit" />
-                        <asp:Button ID="btnCancel" runat="server" Text="Exit"></asp:Button>
+                        Columns" are shown. <br />
+                        <strong>Literal:</strong> If set, the literal format set under the Export options will be used.
                     </td>
                 </tr>
             </table>
         </asp:Panel>
+        <table cellpadding="5" id="tblSave">
+            <tr>
+                <td colspan="3" style="text-align: center;">
+                    <asp:Button ID="btnSave" runat="server" Text="Save"></asp:Button>
+                    <asp:Button runat="server" ID="btnSaveAndExit" Text="Save and Exit" />
+                    <asp:Button ID="btnCancel" runat="server" Text="Exit"></asp:Button>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
 <div style="clear: both">

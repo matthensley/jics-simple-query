@@ -148,15 +148,6 @@ namespace CUS.ICS.SimpleQuery {
         protected global::System.Web.UI.WebControls.LinkButton lnbGetData;
         
         /// <summary>
-        /// divSQResults control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSQResults;
-        
-        /// <summary>
         /// pnlResults control.
         /// </summary>
         /// <remarks>
@@ -182,6 +173,15 @@ namespace CUS.ICS.SimpleQuery {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal preformattedResults;
+        
+        /// <summary>
+        /// divSQResults control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSQResults;
         
         /// <summary>
         /// pnlDataTableResults control.

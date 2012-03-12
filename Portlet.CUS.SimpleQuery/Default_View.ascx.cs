@@ -136,7 +136,8 @@ namespace CUS.ICS.SimpleQuery
                 }
             }else
             {
-                pnlDataTableResults.Visible = true;
+                if(ShouldRenderOutput())
+                    pnlDataTableResults.Visible = true;
             }
 
 
@@ -180,6 +181,9 @@ namespace CUS.ICS.SimpleQuery
             {
                 if (_helper.GetSetting("JICSAllowExports").BoolValue)
                     HttpContext.Current.Session["sqhtml+" + PortalUser.Current.ID.AsGuid + this.ParentPortlet.Portlet.ID.AsGuid] = dt;
+
+                if (Convert.ToInt32(_helper.GetSetting("RowLimit", 0).Value) > 0)
+                    dt = dt.AsEnumerable().Take(Convert.ToInt32(_helper.GetSetting("RowLimit", 0).Value)).CopyToDataTable();
 
                 switch (_helper.GetSetting("JICSOutput", "grid").Value)
                 {

@@ -26,7 +26,7 @@ namespace CUS.ICS.SimpleQuery.Helpers
 
             var values = new Dictionary<string, string>()
                              {
-                                 {"@@HostID", PortalUser.Current.HostID ?? "0"},
+                                 {"@@HostID", _hostId ?? "0"},
                                  {"@@Username", PortalUser.Current.Username ?? ""},
                                  {"@@EmailAddress", PortalUser.Current.EmailAddress ?? ""},
                                  {"@@DisplayName", PortalUser.Current.DisplayName ?? ""},
