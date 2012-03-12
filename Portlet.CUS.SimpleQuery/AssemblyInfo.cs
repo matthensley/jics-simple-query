@@ -7,10 +7,10 @@ using System.Runtime.CompilerServices;
 // associated with an assembly.
 //
 [assembly: AssemblyTitle("Simple Query Portlet")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Custom portlet presenting results of configurable ODBC query, for use in Jenzabar JICS")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Jenzabar")]
-[assembly: AssemblyProduct("Internet Campus Solution")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Portlet.SimpleQuery")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]		
@@ -26,7 +26,7 @@ using System.Runtime.CompilerServices;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion("3.0.3")]
+[assembly: AssemblyVersion("3.1.0")]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 
