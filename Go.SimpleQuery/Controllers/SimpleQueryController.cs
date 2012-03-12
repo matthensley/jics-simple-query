@@ -12,6 +12,7 @@ using CUS.ICS.SimpleQuery.Helpers;
 using CUS.ICS.SimpleQuery.Mappers;
 using Go.SimpleQuery.Models;
 using Jenzabar.Portal.Framework.Facade;
+using mobile.Models;
 using mobile.Controllers;
 using mobile.Infrastructure.Attributes;
 
@@ -28,7 +29,7 @@ namespace Go.SimpleQuery.Controllers
             _mapper = new NHSimpleQuerySettingsMapper();
         }
 
-        public ActionResult Index(ContentIdentifier cid, IPrincipal iPrincipal)
+        public ActionResult Index(ContentIdentifier cid, User user)
         {
             var helper = GetHelper(cid.PortletId.Value);
 
@@ -40,7 +41,7 @@ namespace Go.SimpleQuery.Controllers
                     DataTable dt;
                     try
                     {
-                        dt = GetData(helper, iPrincipal.Identity.Name);
+                        dt = GetData(helper, user.Username);
 
                         if (Convert.ToInt32(helper.GetSetting("RowLimit", 0).Value) > 0)
                             dt = dt.AsEnumerable().Take(Convert.ToInt32(helper.GetSetting("RowLimit", 0).Value)).CopyToDataTable();
@@ -52,7 +53,7 @@ namespace Go.SimpleQuery.Controllers
                                         {
                                             ErrorMessage = "An error occurred while querying the database.",
                                             Exception =
-                                                _userFacade.FindByUsername(iPrincipal.Identity.Name).IsSiteAdmin
+                                                _userFacade.FindByUsername(user.Username).IsSiteAdmin
                                                     ? ex.ToString().Replace("\n", "<br />")
                                                     : String.Empty
                                         });
@@ -72,7 +73,7 @@ namespace Go.SimpleQuery.Controllers
                     List<SimpleQueryDataRow> dataRows;
                     try
                     {
-                        dataRows = GetMasterDetailData(helper, iPrincipal.Identity.Name);
+                        dataRows = GetMasterDetailData(helper, user.Username);
                     }
                     catch (Exception ex)
                     {
@@ -81,7 +82,7 @@ namespace Go.SimpleQuery.Controllers
                                         {
                                             ErrorMessage = "An error occurred while querying the database.",
                                             Exception =
-                                                _userFacade.FindByUsername(iPrincipal.Identity.Name).IsSiteAdmin
+                                                _userFacade.FindByUsername(user.Username).IsSiteAdmin
                                                     ? ex.ToString().Replace("\n","<br />")
                                                     : String.Empty
                                         });
@@ -93,11 +94,11 @@ namespace Go.SimpleQuery.Controllers
                                       };
                     return View("MasterDetail", mdmodel);
                 case "xml":
-                    return Xml(cid, iPrincipal);
+                    return Xml(cid, user);
                 case "csv":
-                    return Csv(cid, iPrincipal);
+                    return Csv(cid, user);
                 case "literal":
-                    return Literal(cid, iPrincipal);
+                    return Literal(cid, user);
                 case "none":
                     return View("Error", new Error { ErrorMessage = "Results for this portlet are not enabled for JICS Go" });
                 default:
@@ -105,13 +106,13 @@ namespace Go.SimpleQuery.Controllers
             }
         }
 
-        public ActionResult Xml(ContentIdentifier cid, IPrincipal iPrincipal)
+        public ActionResult Xml(ContentIdentifier cid, User user)
         {
             var helper = GetHelper(cid.PortletId.Value);
             DataTable dt;
             try
             {
-                dt = GetData(helper, iPrincipal.Identity.Name);
+                dt = GetData(helper, user.Username);
             }
             catch (Exception ex)
             {
@@ -120,7 +121,7 @@ namespace Go.SimpleQuery.Controllers
                             {
                                 ErrorMessage = "An error occurred while querying the database.",
                                 Exception =
-                                    _userFacade.FindByUsername(iPrincipal.Identity.Name).IsSiteAdmin
+                                    _userFacade.FindByUsername(user.Username).IsSiteAdmin
                                         ? ex.ToString().Replace("\n", "<br />")
                                         : String.Empty
                             });
@@ -133,13 +134,13 @@ namespace Go.SimpleQuery.Controllers
             return View("Literal", model);
         }
 
-        public ActionResult Csv(ContentIdentifier cid, IPrincipal iPrincipal)
+        public ActionResult Csv(ContentIdentifier cid, User user)
         {
             var helper = GetHelper(cid.PortletId.Value);
             DataTable dt;
             try
             {
-                dt = GetData(helper, iPrincipal.Identity.Name);
+                dt = GetData(helper, user.Username);
             }
             catch (Exception ex)
             {
@@ -148,7 +149,7 @@ namespace Go.SimpleQuery.Controllers
                             {
                                 ErrorMessage = "An error occurred while querying the database.",
                                 Exception =
-                                    _userFacade.FindByUsername(iPrincipal.Identity.Name).IsSiteAdmin
+                                    _userFacade.FindByUsername(user.Username).IsSiteAdmin
                                         ? ex.ToString().Replace("\n", "<br />")
                                         : String.Empty
                             });
@@ -164,13 +165,13 @@ namespace Go.SimpleQuery.Controllers
             return View("Literal", model);
         }
 
-        public ActionResult Literal(ContentIdentifier cid, IPrincipal iPrincipal)
+        public ActionResult Literal(ContentIdentifier cid, User user)
         {
             var helper = GetHelper(cid.PortletId.Value);
             DataTable dt;
             try
             {
-                dt = GetData(helper, iPrincipal.Identity.Name);
+                dt = GetData(helper, user.Username);
             }
             catch (Exception ex)
             {
@@ -179,7 +180,7 @@ namespace Go.SimpleQuery.Controllers
                             {
                                 ErrorMessage = "An error occurred while querying the database.",
                                 Exception =
-                                    _userFacade.FindByUsername(iPrincipal.Identity.Name).IsSiteAdmin
+                                    _userFacade.FindByUsername(user.Username).IsSiteAdmin
                                         ? ex.ToString().Replace("\n", "<br />")
                                         : String.Empty
                             });
@@ -192,7 +193,7 @@ namespace Go.SimpleQuery.Controllers
             return View("Literal", model);
         }
 
-        public ActionResult Export(ContentIdentifier cid, IPrincipal iPrincipal)
+        public ActionResult Export(ContentIdentifier cid, User user)
         {
             var helper = GetHelper(cid.PortletId.Value);
             var model = new SimpleQueryExport
@@ -203,7 +204,7 @@ namespace Go.SimpleQuery.Controllers
             return View(model);
         }
 
-        public ActionResult ExportFile(String fileType, ContentIdentifier cid, IPrincipal iPrincipal)
+        public ActionResult ExportFile(String fileType, ContentIdentifier cid, User user)
         {
             var helper = GetHelper(cid.PortletId.Value);
             List<String> allowedTypes = AllowedExports(helper);
@@ -212,7 +213,7 @@ namespace Go.SimpleQuery.Controllers
                 DataTable dt;
                 try
                 {
-                    dt = GetData(helper, iPrincipal.Identity.Name);
+                    dt = GetData(helper, user.Username);
                 }
                 catch (Exception ex)
                 {
@@ -221,7 +222,7 @@ namespace Go.SimpleQuery.Controllers
                                     {
                                         ErrorMessage = "An error occurred while querying the database.",
                                         Exception =
-                                            _userFacade.FindByUsername(iPrincipal.Identity.Name).IsSiteAdmin
+                                            _userFacade.FindByUsername(user.Username).IsSiteAdmin
                                                 ? ex.ToString().Replace("\n", "<br />")
                                                 : String.Empty
                                     });
