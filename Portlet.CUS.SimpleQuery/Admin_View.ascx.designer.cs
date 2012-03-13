@@ -67,6 +67,15 @@ namespace CUS.ICS.SimpleQuery {
         protected global::System.Web.UI.WebControls.TextBox txtQuery;
         
         /// <summary>
+        /// tbTestHostId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbTestHostId;
+        
+        /// <summary>
         /// tbQueryTimeout control.
         /// </summary>
         /// <remarks>
@@ -83,15 +92,6 @@ namespace CUS.ICS.SimpleQuery {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbRowLimit;
-        
-        /// <summary>
-        /// tbTestHostId control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbTestHostId;
         
         /// <summary>
         /// txtColumnLabels control.
