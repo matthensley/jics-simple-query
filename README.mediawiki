@@ -1,0 +1,22 @@
+= Welcome to Simple Query! =
+
+SimpleQuery is a portlet that renders configurable output from a single ODBC query.
+
+== Application details ==
+
+* developed using ASP.NET 3.5
+* Go.SimpleQuery uses ASP.NET MVC
+
+== Requirements ==
+
+* Portlet.SimpleQuery runs within the [http://www.jenzabar.com/products.aspx?id=136 Jenzabar Internet Campus Solution (JICS) portal]
+* Go.SimpleQuery runs within the [http://www.jenzabar.com/products.aspx?id=1156 JICS Go mobile portal]
+
+== Install, Configuration, Contacts ==
+
+Checkout [https://wiki.myjenzabar.net/Simple_Query_Portlet] wiki page for installation information, migration, etc.
+
+== Contribute ==
+
+Want to help - send a pull request.
+We'll accept good pull requests.
