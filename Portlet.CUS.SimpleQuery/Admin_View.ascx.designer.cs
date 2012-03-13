@@ -175,15 +175,6 @@ namespace CUS.ICS.SimpleQuery {
         protected global::System.Web.UI.HtmlControls.HtmlTableRow trLinkText;
         
         /// <summary>
-        /// pLinkText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl pLinkText;
-        
-        /// <summary>
         /// tbLinkText control.
         /// </summary>
         /// <remarks>
@@ -200,15 +191,6 @@ namespace CUS.ICS.SimpleQuery {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTableRow trLinkDescription;
-        
-        /// <summary>
-        /// pDescription control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl pDescription;
         
         /// <summary>
         /// tbDescription control.

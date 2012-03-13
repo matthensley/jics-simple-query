@@ -256,7 +256,7 @@
             <tr>
                 <td>
                     <strong>Connection</strong><asp:Button ID="btnTestConnection" runat="server" Text="Test"
-                        Style="float: right"></asp:Button>
+                        Style="float: right;"></asp:Button>
                 </td>
                 <td>
                     <p>
@@ -275,7 +275,7 @@
             </tr>
             <tr>
                 <td>
-                    <strong>Query</strong><asp:Button ID="btnTestQuery" runat="server" Text="Test" Style="float: right">
+                    <strong>Query</strong><asp:Button ID="btnTestQuery" runat="server" Text="Test" Style="float: right;">
                     </asp:Button>
                 </td>
                 <td>
@@ -309,7 +309,7 @@
                     <strong>Query Timeout</strong>
                 </td>
                 <td>
-                    <asp:TextBox ID="tbQueryTimeout" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="tbQueryTimeout" runat="server" Columns="10"></asp:TextBox>
                 </td>
                 <td>
                     The number of seconds to allow the query to run without quitting. If a zero or blank
@@ -322,7 +322,7 @@
                     <strong>Row Limit</strong>
                 </td>
                 <td>
-                    <asp:TextBox runat="server" ID="tbRowLimit"></asp:TextBox>
+                    <asp:TextBox runat="server" ID="tbRowLimit" Columns="10"></asp:TextBox>
                 </td>
                 <td>
                     This will limit the number of rows returned to the screen, but will <em>not</em>
@@ -334,10 +334,11 @@
                     <strong>Test HostID</strong>
                 </td>
                 <td>
-                    <asp:TextBox runat="server" ID="tbTestHostId"></asp:TextBox>
+                    <asp:TextBox runat="server" ID="tbTestHostId" Columns="15"></asp:TextBox>
                 </td>
                 <td>
-                    Subsitute current HostID with this. Only used here for testing.
+                    Subsitute @@HostID variable with this 
+                    value. Only used here for testing.
                 </td>
             </tr>
             <tr>
@@ -345,7 +346,7 @@
                     <strong>Column Headings</strong>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtColumnLabels" Columns="30" runat="server" Visible="True">Column1Title,Column2Title,etc</asp:TextBox>
+                    <asp:TextBox ID="txtColumnLabels" Columns="40" runat="server" Visible="True">Column1 Title, Column2 Title, etc</asp:TextBox>
                 </td>
                 <td>
                     If you provide a comma-separated set of names, they will be used as display column
@@ -363,16 +364,24 @@
                     <asp:CheckBox runat="server" ID="chkExportCsv" Text="CSV" /><br />
                     <asp:CheckBox runat="server" ID="chkExportLiteral" Text="Literal" />
                 </td>
+                <td>
+                    Exported data files will use the Query Title as a file name 
+                    (QueryTitle.ext).
+                    <ul><li>Excel - an HTML table (.xls) Note: only available in JICS portlet, not JICS Go view</li>
+                        <li>XML - a standard XML structure using column names as element names (.xml)</li>
+                        <li>CSV - comma-separated text, one result row per line (.csv)</li>
+                        <li>Literal - raw query results without delimiters, enclosed with optional Format string below (.txt)</li>
+                    </ul>
+                </td>
             </tr>
             <tr id="trLiteralFormat" runat="server">
                 <td>
                     &nbsp;
                 </td>
                 <td>
-                    <p>
-                        Format:
-                        <asp:TextBox runat="server" ID="tbExportLiteralPattern" TextMode="MultiLine" Rows="3"
-                            Columns="40"></asp:TextBox></p>
+                    <strong>Format:</strong><br />
+                    <asp:TextBox runat="server" ID="tbExportLiteralPattern" TextMode="MultiLine" Rows="3"
+                        Columns="40"></asp:TextBox>
                 </td>
                 <td>
                     <p>
@@ -383,54 +392,62 @@
             <tr>
                 <td colspan="3">
                     <h4>
-                        JICS Display</h4>
+                        JICS Display
+                    </h4>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <strong>Portlet Display</strong>
+                    <strong>Minimized View</strong>
                 </td>
                 <td>
-                    <asp:CheckBox runat="server" ID="chkDisplayResultsMinimized" Text="Show results in both Minimized and Maximized View" />
+                    <asp:CheckBox runat="server" ID="chkDisplayResultsMinimized" 
+                        Text="Show results in Minimized View" 
+                        oncheckedchanged="chkDisplayResultsMinimized_CheckedChanged" />
                 </td>
                 <td>
-                    If not set, a link and description will be shown in the mimized view.
-                </td>
+                    If checked, result output will be shown in the Minimized View (viewing more than one 
+                    portlet on page)<br />
+                    If not checked, a Link and Description will be shown in the Minimized view. 
+                    Clicking the link displays results.<br />
+                    Result output is always shown in Maxmized view (viewing only this portlet).</td>
             </tr>
             <tr id="trLinkText" runat="server">
-                <td>
-                    <strong>Link Text </strong>
-                </td>
-                <td>
-                    <p id="pLinkText" runat="server">
-                        <asp:TextBox runat="server" ID="tbLinkText" Columns="40"></asp:TextBox>
-                    </p>
-                </td>
-                <td>
-                    Uses &quot;Show Results&quot; if not set
-                </td>
-            </tr>
-            <tr id="trLinkDescription" runat="server">
-                <td>
-                    <strong>Description</strong>
-                </td>
-                <td>
-                    <p id="pDescription" runat="server">
-                        <asp:TextBox runat="server" ID="tbDescription" Rows="7" Columns="40" TextMode="MultiLine"></asp:TextBox>
-                    </p>
-                </td>
-            </tr>
-            <tr>
                 <td>
                     &nbsp;
                 </td>
                 <td>
-                    <asp:CheckBox runat="server" ID="chkJICSAllowExports" Text="Allow Exports" />
+                    <strong>Link Text </strong>
+                    <asp:TextBox runat="server" ID="tbLinkText" Columns="35"></asp:TextBox>
+                </td>
+                <td>
+                    Link text will be &quot;Show Results&quot; if no value provided here.
+                </td>
+            </tr>
+            <tr id="trLinkDescription" runat="server">
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    <strong>Description</strong><br />
+                    <asp:TextBox runat="server" ID="tbDescription" Rows="5" Columns="40" TextMode="MultiLine"></asp:TextBox>
+                </td>
+                <td>Descriptive text displayed beside Link Text above.</td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Export</strong> 
+                </td>
+                <td>
+                    <asp:CheckBox runat="server" ID="chkJICSAllowExports" Text="Display Export Panel" />
+                </td>
+                <td>
+                    Display in the JICS portlet a panel with links for any active Export Options 
                 </td>
             </tr>
             <tr>
                 <td>
-                    <strong>Output Settings:</strong>
+                    <strong>Output Settings</strong>
                 </td>
                 <td>
                     <asp:CheckBox runat="server" ID="chkJICSAsync" Text="Use Asynchronous Loading" /><br />
@@ -442,7 +459,7 @@
                         <asp:CheckBox runat="server" ID="chkJICSShowColumnHeadings" Text="Show Column Headings" /><br />
                         <asp:CheckBox runat="server" ID="chkJICSGridShowGridlines" Text="Show Gridlines" /><br />
                         Cell Padding:
-                        <asp:TextBox runat="server" ID="tbJICSGridCellPadding"></asp:TextBox><br />
+                        <asp:TextBox runat="server" ID="tbJICSGridCellPadding" Columns="10"></asp:TextBox><br />
                         <asp:CheckBox runat="server" ID="chkJICSGridAltRowColors" Text="Use Alternating Row Colors" /><br />
                     </div>
                     <input type="radio" id="rbJICSOutputDataTables" name="rbJICSOutput" value="datatables"
@@ -450,8 +467,8 @@
                     <label for="<%= rbJICSOutputDataTables.ClientID %>">
                         Dynamic Data Table</label><br />
                     <div id="divJICSOutputDataTablesSettings" runat="server" style="margin-left: 20px;">
-                        Expanded Display Columns
-                        <asp:TextBox runat="server" ID="tbJICSDataTablesExpandedColumns"></asp:TextBox>
+                        Expanded Display Columns<br />
+                        <asp:TextBox runat="server" ID="tbJICSDataTablesExpandedColumns" Columns="40"></asp:TextBox>
                     </div>
                     <input type="radio" id="rbJICSOutputXML" name="rbJICSOutput" value="xml" runat="server" />
                     <label for="<%= rbJICSOutputXML.ClientID %>">
@@ -465,79 +482,83 @@
                         Literal</label>
                 </td>
                 <td>
+                    <strong>Asynchronous Loading</strong> results will load after page is displayed.<br />
                     <strong>Plain Grid</strong> shows the data in a simple static table on the page.<br />
                     <strong>Dynamic Data Table</strong> presents query results in a sortable, searchable,
-                    paged grid using jQuery DataTables.<br />
-                    <strong>Literal:</strong> If set, the literal format set under the Export options
-                    will be used.
+                    paged grid using jQuery DataTables. Any columns listed in the Expanded Display 
+                    Columns field will visible only when users click on an expansion icon.<br />
+                    <strong>XML, CSV, or Literal - </strong>the same format will be displayed as 
+                    produced by Export options.
                 </td>
             </tr>
-        </table>
-        <asp:Panel runat="server" ID="pnlGoSettings" Visible="False">
-            <table cellpadding="5" id="tblGoSettings">
-                <tr>
-                    <td colspan="3">
-                        <h4>
-                            JICS Go Display</h4>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="125">
-                        &nbsp;
-                    </td>
-                    <td width="350">
-                        <asp:CheckBox runat="server" ID="chkGOAllowExports" Text="Allow Exports" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <strong>Output Settings:</strong>
-                    </td>
-                    <td>
-                        <input type="radio" id="rbGOOutputNone" name="rbGOOutput" value="none" runat="server" />
-                        <label for="<%= rbGOOutputNone.ClientID %>">
-                            None</label><br />
-                        <input type="radio" id="rbGOOutputGrid" name="rbGOOutput" value="grid" runat="server" />
-                        <label for="<%= rbGOOutputGrid.ClientID %>">
-                            Plain Grid</label><br />
-                        <div id="divGOOutputGridSettings" runat="server" style="margin-left: 20px;">
-                            <asp:CheckBox runat="server" ID="chkGOGridShowColumnHeadings" Text="Show Column Headings" /><br />
-                            <asp:CheckBox runat="server" ID="chkGOGridShowGridlines" Text="Show Gridlines" /><br />
-                            Cell Padding:
-                            <asp:TextBox runat="server" ID="tbGOGridCellPadding"></asp:TextBox><br />
-                            <asp:CheckBox runat="server" ID="chkGOGridAltRowColors" Text="Use Alternating Row Colors" /><br />
-                        </div>
-                        <input type="radio" id="rbGOOutputMasterDetail" name="rbGOOutput" value="masterdetail"
-                            runat="server" />
-                        <label for="<%= rbGOOutputMasterDetail.ClientID %>">
-                            Master-Detail</label><br />
-                        <div id="divGOOutputMasterDetailSettings" runat="server" style="margin-left: 20px;">
-                            Detail Display Columns
-                            <asp:TextBox runat="server" ID="tbGOOutputMasterDetailDisplayColumns"></asp:TextBox>
-                        </div>
-                        <input type="radio" id="rbGOOutputXML" name="rbGOOutput" value="xml" runat="server" />
-                        <label for="<%= rbGOOutputXML.ClientID %>">
-                            XML</label><br />
-                        <input type="radio" id="rbGOOutputCSV" name="rbGOOutput" value="csv" runat="server" />
-                        <label for="<%= rbGOOutputCSV.ClientID %>">
-                            CSV</label><br />
-                        <input type="radio" id="rbGOOutputLiteral" name="rbGOOutput" value="literal" runat="server" />
-                        <label for="<%= rbGOOutputLiteral.ClientID %>">
-                            Literal</label>
-                    </td>
-                    <td>
-                        <strong>Plain Grid</strong> shows the data in a simple static table on the page.<br />
-                        <strong>Master-Detail Mode</strong> presents results with the first column being
-                        displayed only. On tap (click) the rest of the columns specified in "Detail Display
-                        Columns" are shown. <br />
-                        <strong>Literal:</strong> If set, the literal format set under the Export options will be used.
-                    </td>
-                </tr>
-            </table>
-        </asp:Panel>
-        <table cellpadding="5" id="tblSave">
+        <asp:Panel runat="server" ID="pnlGoSettings" Visible="true">
             <tr>
-                <td colspan="3" style="text-align: center;">
+                <td colspan="3">
+                    <h4>
+                        JICS Go Display</h4>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Export</strong>
+                </td>
+                <td>
+                    <asp:CheckBox runat="server" ID="chkGOAllowExports" Text="Display Export Link" />
+                </td>
+                <td>
+                    Display in JICS Go view an Export link leading to a list of active Export Options 
+                    (not including Excel)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Output Settings</strong>
+                </td>
+                <td>
+                    <input type="radio" id="rbGOOutputNone" name="rbGOOutput" value="none" runat="server" />
+                    <label for="<%= rbGOOutputNone.ClientID %>">
+                        None</label><br />
+                    <input type="radio" id="rbGOOutputGrid" name="rbGOOutput" value="grid" runat="server" />
+                    <label for="<%= rbGOOutputGrid.ClientID %>">
+                        Plain Grid</label><br />
+                    <div id="divGOOutputGridSettings" runat="server" style="margin-left: 20px;">
+                        <asp:CheckBox runat="server" ID="chkGOGridShowColumnHeadings" Text="Show Column Headings" /><br />
+                        <asp:CheckBox runat="server" ID="chkGOGridShowGridlines" Text="Show Gridlines" /><br />
+                        Cell Padding:
+                        <asp:TextBox runat="server" ID="tbGOGridCellPadding" Columns="10"></asp:TextBox><br />
+                        <asp:CheckBox runat="server" ID="chkGOGridAltRowColors" Text="Use Alternating Row Colors" /><br />
+                    </div>
+                    <input type="radio" id="rbGOOutputMasterDetail" name="rbGOOutput" value="masterdetail"
+                        runat="server" />
+                    <label for="<%= rbGOOutputMasterDetail.ClientID %>">
+                        Master-Detail</label><br />
+                    <div id="divGOOutputMasterDetailSettings" runat="server" style="margin-left: 20px;">
+                        Detail Display Columns:<br /><asp:TextBox runat="server" ID="tbGOOutputMasterDetailDisplayColumns" Columns="35"></asp:TextBox>
+                    </div>
+                    <input type="radio" id="rbGOOutputXML" name="rbGOOutput" value="xml" runat="server" />
+                    <label for="<%= rbGOOutputXML.ClientID %>">
+                        XML</label><br />
+                    <input type="radio" id="rbGOOutputCSV" name="rbGOOutput" value="csv" runat="server" />
+                    <label for="<%= rbGOOutputCSV.ClientID %>">
+                        CSV</label><br />
+                    <input type="radio" id="rbGOOutputLiteral" name="rbGOOutput" value="literal" runat="server" />
+                    <label for="<%= rbGOOutputLiteral.ClientID %>">
+                        Literal</label>
+                </td>
+                <td>
+                    <strong>None</strong> turns off output display for JICS Go.<br />
+                    <strong>Plain Grid</strong> shows the data in a simple static table on the page.<br />
+                    <strong>Master-Detail Mode</strong> presents results with the first column being 
+                    displayed only. On tap (click) any columns specified in &quot;Detail Display Columns&quot; 
+                    are shown. <br />
+                    <strong>XML, CSV, or Literal - </strong> the same format will be displayed as 
+                    produced by Export Options.&nbsp;
+                </td>
+            </tr>
+        </asp:Panel>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">
                     <asp:Button ID="btnSave" runat="server" Text="Save"></asp:Button>
                     <asp:Button runat="server" ID="btnSaveAndExit" Text="Save and Exit" />
                     <asp:Button ID="btnCancel" runat="server" Text="Exit"></asp:Button>
@@ -546,5 +567,4 @@
         </table>
     </div>
 </div>
-<div style="clear: both">
-</div>
+<div style="clear: both;"></div>
