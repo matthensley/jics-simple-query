@@ -1,8 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Admin_View.ascx.cs"
     Inherits="CUS.ICS.SimpleQuery.Admin_View" %>
-<link href="<%= ResolveUrl("~/ClientConfig/css/jqueryDataTable.css") %>" rel="stylesheet"
-    type="text/css" />
-<script type="text/javascript" src="<%= ResolveUrl("~/ClientConfig/js/jquery.dataTables.min.js") %>"></script>
+<link href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 
     jQuery(function ($) {

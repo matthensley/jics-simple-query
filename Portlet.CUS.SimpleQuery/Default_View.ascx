@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Default_View.ascx.cs"
     Inherits="CUS.ICS.SimpleQuery.Default_View" %>
-<link href="<%= this.ResolveUrl("~/ClientConfig/css/jqueryDataTable.css") %>" rel="stylesheet"
+<link href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css" rel="stylesheet"
     type="text/css" />
 <script type="text/javascript">
 
@@ -94,7 +94,7 @@
 
         if ($('#<%= tblDataTable.ClientID %>').length != 0)
             if ($.fn.dataTableExt == undefined) {
-                $.getScript('<%= this.ResolveUrl("~/ClientConfig/js/jquery.dataTables.min.js") %>', function () {
+                $.getScript('https://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.min.js', function () {
                     loadTable(controls, portletLocation, portletId);
                 });
             }
