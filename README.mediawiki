@@ -14,7 +14,7 @@ SimpleQuery is a portlet that renders configurable output from a single ODBC que
 
 == Install, Configuration, Contacts ==
 
-Checkout [https://wiki.myjenzabar.net/Simple_Query_Portlet] wiki page for installation information, migration, etc.
+See [https://wiki.myjenzabar.net/Simple_Query_Portlet the wiki.myjenzabar.net page] for installation information, migration, etc.
 
 == Contribute ==
 
