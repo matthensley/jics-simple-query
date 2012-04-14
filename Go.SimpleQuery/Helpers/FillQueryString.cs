@@ -21,8 +21,16 @@ namespace Go.SimpleQuery.Helpers
         public string FilledQueryString()
         {
             var fqs = new StringBuilder(_queryString);
-            var pluginService = new CommonPluginService();
-            var currentTerm = pluginService.GetTerms();
+
+            var currentSession = String.Empty;
+            var currentYear = String.Empty;
+            if (_queryString.Contains("@@CurrentYear") || _queryString.Contains("@@CurrentSession"))
+            {
+                var pluginService = new CommonPluginService();
+                var currentTerm = pluginService.GetTerms();
+                currentSession = currentTerm.Session;
+                currentYear = currentTerm.Year.ToString();
+            }
 
             var values = new Dictionary<string, string>()
                              {
@@ -33,8 +41,8 @@ namespace Go.SimpleQuery.Helpers
                                  {"@@FirstName", _user.FirstName ?? ""},
                                  {"@@MiddleName", _user.MiddleName ?? ""},
                                  {"@@LastName", _user.LastName ?? ""},
-                                 {"@@CurrentYear", currentTerm.Year.ToString()},
-                                 {"@@CurrentSession", currentTerm.Session}
+                                 {"@@CurrentYear", currentSession},
+                                 {"@@CurrentSession", currentYear}
                              };
 
             foreach (var item in values)

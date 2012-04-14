@@ -21,9 +21,17 @@ namespace CUS.ICS.SimpleQuery.Helpers
         public string FilledQueryString()
         {
             var fqs = new StringBuilder(_queryString);
-            var pluginService = new CommonPluginService();
-            var currentTerm = pluginService.GetTerms();
 
+            var currentSession = String.Empty;
+            var currentYear = String.Empty;
+            if (_queryString.Contains("@@CurrentYear") || _queryString.Contains("@@CurrentSession"))
+            {
+                var pluginService = new CommonPluginService();
+                var currentTerm = pluginService.GetTerms();
+                currentSession = currentTerm.Session;
+                currentYear = currentTerm.Year.ToString();
+            }
+            
             var values = new Dictionary<string, string>()
                              {
                                  {"@@HostID", _hostId ?? "0"},
@@ -33,8 +41,8 @@ namespace CUS.ICS.SimpleQuery.Helpers
                                  {"@@FirstName", PortalUser.Current.FirstName ?? ""},
                                  {"@@MiddleName", PortalUser.Current.MiddleName ?? ""},
                                  {"@@LastName", PortalUser.Current.LastName ?? ""},
-                                 {"@@CurrentYear", currentTerm.Year.ToString()},
-                                 {"@@CurrentSession", currentTerm.Session}
+                                 {"@@CurrentYear", currentSession},
+                                 {"@@CurrentSession", currentYear}
                              };
 
             foreach (var item in values)
