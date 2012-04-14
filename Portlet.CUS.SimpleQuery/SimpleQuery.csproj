@@ -107,6 +107,34 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin_View.ascx" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-bg_flat_55_fbec88_40x100.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-bg_glass_0_0a3772_1x400.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-bg_gloss-wave_0_0a3772_500x100.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-bg_inset-hard_100_f8f8f8_1x100.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-icons_222222_256x240.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-icons_454545_256x240.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-icons_888888_256x240.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="ClientConfig\css\jquery-ui-theme\jquery-ui-1.8.18.custom.css" />
+    <Content Include="ClientConfig\images\datatables\details_close.png" />
+    <Content Include="ClientConfig\images\datatables\details_open.png" />
+    <Content Include="CUS_SimpleQuery.sql" />
     <Content Include="Default_View.ascx" />
     <Content Include="Export_Data.aspx" />
     <EmbeddedResource Include="NHibernateMapping.hbm.xml" />
@@ -150,6 +178,8 @@
     <Compile Include="SimpleQuery.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Content Include="FWK_Globalization.sql" />
+    <Content Include="FWK_VersionInfo.sql" />
     <Content Include="Query.ashx" />
     <Content Include="Admin.ashx" />
     <Content Include="Web.config" />
@@ -163,7 +193,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="ClientConfig\css\jquery-ui-theme\images\Thumbs.db" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>cd $(TargetDir)
