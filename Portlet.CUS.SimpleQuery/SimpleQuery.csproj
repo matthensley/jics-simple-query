@@ -75,6 +75,9 @@
     <Reference Include="Jenzabar.Portal.Framework.Web">
       <HintPath>V:\Program Files\Jenzabar\ICS.NET\Portal\bin\Jenzabar.Portal.Framework.Web.dll</HintPath>
     </Reference>
+    <Reference Include="LiteralStringReplacer.Facade">
+      <HintPath>V:\Program Files\Jenzabar\ICS.NET\Portal\bin\LiteralStringReplacer.Facade.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate, Version=2.1.2.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>V:\Program Files\Jenzabar\ICS.NET\Portal\bin\NHibernate.dll</HintPath>
@@ -163,8 +166,6 @@
       <DependentUpon>Export_Data.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Helpers\CommonPluginService.cs" />
-    <Compile Include="Helpers\FillQueryString.cs" />
     <Compile Include="Helpers\FormatXml.cs" />
     <Compile Include="Helpers\JSDataTable.cs" />
     <Compile Include="Helpers\OutputHelper.cs" />

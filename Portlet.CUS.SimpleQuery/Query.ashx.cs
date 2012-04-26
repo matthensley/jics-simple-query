@@ -10,6 +10,7 @@ using Jenzabar.Portal.Framework.Facade;
 using CUS.ICS.SimpleQuery.Helpers;
 using CUS.ICS.SimpleQuery.Mappers;
 using System.Web.SessionState;
+using LiteralStringReplacer.Facade;
 
 namespace CUS.ICS.SimpleQuery
 {
@@ -60,8 +61,7 @@ namespace CUS.ICS.SimpleQuery
 
         public object RunQuery(Guid _portletID)
         {
-            CUS.OdbcConnectionClass3.OdbcConnectionClass3 odbcConn;
-            Portlet portlet = Jenzabar.Common.ObjectFactoryWrapper.GetInstance<IPortletFacade>().FindByGuid(_portletID);
+            Portlet portlet = ObjectFactoryWrapper.GetInstance<IPortletFacade>().FindByGuid(_portletID);
 
             if (portlet.ParentPage.CanView(PortalUser.Current))
             {
@@ -149,7 +149,6 @@ namespace CUS.ICS.SimpleQuery
 
                     try
                     {
-                        Exception ex = null;
                         DataTable dt = GetData(_portletID);
 
                         String html = string.Empty;
@@ -262,12 +261,14 @@ namespace CUS.ICS.SimpleQuery
 
             Exception ex = null;
             DataTable dt;
-            var queryStringFiller = new FillQueryString(_helper.GetSetting("QueryText").Value);
+            var literalStringReplacer = ObjectFactoryWrapper.GetInstance<ILiteralStringReplacer>();
+
+            var queryString = literalStringReplacer.Process(_helper.GetSetting("QueryText").Value);
 
             if (Convert.ToInt16(_helper.GetSetting("QueryTimeout", 0).Value) > 0)
-                dt = odbcConn.ConnectToERP(queryStringFiller.FilledQueryString(), ref ex, Convert.ToInt16(_helper.GetSetting("QueryTimeout").Value));
+                dt = odbcConn.ConnectToERP(queryString, ref ex, Convert.ToInt16(_helper.GetSetting("QueryTimeout").Value));
             else
-                dt = odbcConn.ConnectToERP(queryStringFiller.FilledQueryString(), ref ex);
+                dt = odbcConn.ConnectToERP(queryString, ref ex);
 
             if (ex != null)
             {

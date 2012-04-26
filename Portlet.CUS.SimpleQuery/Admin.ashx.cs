@@ -9,6 +9,7 @@ using Jenzabar.Portal.Framework;
 using Jenzabar.Portal.Framework.Facade;
 using CUS.ICS.SimpleQuery.Helpers;
 using System.Web.SessionState;
+using LiteralStringReplacer.Facade;
 
 namespace CUS.ICS.SimpleQuery
 {
@@ -107,17 +108,13 @@ namespace CUS.ICS.SimpleQuery
         [WebMethod(EnableSession = true)]
         public object TestQuery(string _connectionFile, string _queryString, Guid _portletID, string _expandedColumns, string _columnLabels, string _queryTimeout, string _testHostId)
         {
-            Portlet portlet = Jenzabar.Common.ObjectFactoryWrapper.GetInstance<IPortletFacade>().FindByGuid(_portletID);
-
+            var portlet = Jenzabar.Common.ObjectFactoryWrapper.GetInstance<IPortletFacade>().FindByGuid(_portletID);
+            var literalStringReplacer = Jenzabar.Common.ObjectFactoryWrapper.GetInstance<ILiteralStringReplacer>();
             if (portlet.AccessCheck("CanAdminQueries"))
             {
                 try
                 {
-                    CUS.OdbcConnectionClass3.OdbcConnectionClass3 odbcConn;
-                    if (_connectionFile.Contains(".config"))
-                        odbcConn = new CUS.OdbcConnectionClass3.OdbcConnectionClass3("~/ClientConfig/" + _connectionFile);
-                    else
-                        odbcConn = new CUS.OdbcConnectionClass3.OdbcConnectionClass3( _connectionFile);
+                    var odbcConn = _connectionFile.Contains(".config") ? new CUS.OdbcConnectionClass3.OdbcConnectionClass3("~/ClientConfig/" + _connectionFile) : new CUS.OdbcConnectionClass3.OdbcConnectionClass3( _connectionFile);
 
                     odbcConn.ConnectionTest();
 
@@ -126,16 +123,18 @@ namespace CUS.ICS.SimpleQuery
                         var qs = new QuerySafe();
                         if (qs.IsQuerySafeEnough(_queryString, portlet))
                         {
+                            if (!String.IsNullOrEmpty(_testHostId))
+                                literalStringReplacer.Extend("@@HostID", _testHostId);
 
-                            var fqs = new FillQueryString(_queryString, _testHostId);
+                            var fqs = literalStringReplacer.Process(_queryString);
 
                             Exception exError = null;
                             DataTable dt;
                             var qt = 0;
                             if (Int32.TryParse(_queryTimeout, out qt) && qt > 0)
-                                dt = odbcConn.ConnectToERP(fqs.FilledQueryString(), ref exError, qt);
+                                dt = odbcConn.ConnectToERP(fqs, ref exError, qt);
                             else
-                                dt = odbcConn.ConnectToERP(fqs.FilledQueryString(), ref exError);
+                                dt = odbcConn.ConnectToERP(fqs, ref exError);
                             if (exError != null)
                             {
                                 return new

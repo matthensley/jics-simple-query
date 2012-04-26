@@ -8,11 +8,13 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI.WebControls;
 using System.Xml;
+using Jenzabar.Common;
 using Jenzabar.Portal.Framework;
 using Jenzabar.Portal.Framework.Web.UI;
 using CUS.ICS.SimpleQuery.Mappers;
 using CUS.ICS.SimpleQuery.Entities;
 using CUS.ICS.SimpleQuery.Helpers;
+using LiteralStringReplacer.Facade;
 
 
 namespace CUS.ICS.SimpleQuery
@@ -173,8 +175,15 @@ namespace CUS.ICS.SimpleQuery
         private void RenderOutput()
         {
             if (!ShouldRenderOutput()) return;
-
-            DataTable dt = GetData();
+            DataTable dt = null;
+            try
+            {
+                 dt = GetData();
+            }catch(Exception ex)
+            {
+                this.ParentPortlet.ShowFeedback(FeedbackType.Error, "Query Failed. Contact portal administrator. " + ex);
+                return;
+            }
 
             //if the below is true then at least one row was returned
             if (dt != null && dt.Rows.Count > 0)
@@ -244,7 +253,7 @@ namespace CUS.ICS.SimpleQuery
             catch
             {
                 this.ParentPortlet.ShowFeedback(FeedbackType.Error, "Unable to locate usable connection string. Contact portal administrator.");
-                throw new Exception();
+                throw;
             }
 
             try
@@ -254,22 +263,24 @@ namespace CUS.ICS.SimpleQuery
             catch
             {
                 this.ParentPortlet.ShowFeedback(FeedbackType.Error, "Database connection test failed. Contact portal administrator.");
-                throw new Exception();
+                throw;
             }
 
             var ex = new Exception();
             try
             {
-                var queryStringFiller = new FillQueryString(_helper.GetSetting("QueryText").Value);
+                var literalStringReplacer = ObjectFactoryWrapper.GetInstance<ILiteralStringReplacer>();
+
+                var queryString = literalStringReplacer.Process(_helper.GetSetting("QueryText").Value);
                 if (Convert.ToInt16(_helper.GetSetting("QueryTimeout", 0).Value) > 0)
-                    return odbcConn.ConnectToERP(queryStringFiller.FilledQueryString(), ref ex, Convert.ToInt16(_helper.GetSetting("QueryTimeout").Value));
+                    return odbcConn.ConnectToERP(queryString, ref ex, Convert.ToInt16(_helper.GetSetting("QueryTimeout").Value));
                 else
-                    return odbcConn.ConnectToERP(queryStringFiller.FilledQueryString(), ref ex);
+                    return odbcConn.ConnectToERP(queryString, ref ex);
             }
             catch (Exception ee)
             {
                 this.ParentPortlet.ShowFeedback(FeedbackType.Error, "Query Failed. Contact portal administrator. " + ex.ToString() + ee.ToString());
-                throw new Exception();
+                throw;
             }
         }
     }

@@ -31,7 +31,7 @@ namespace CUS.ICS.SimpleQuery.Helpers
                 doc.LoadXml(writer.ToString());
                 xml = FormatXml.Format(doc, encoding);
             }
-            catch (Exception ee)
+            catch 
             {
                 xml = FormatXml.Format(doc, encoding);
             }
