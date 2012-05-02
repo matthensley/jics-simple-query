@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using Jenzabar.Common;
 using Jenzabar.Portal.Framework;
 using Jenzabar.Portal.Framework.Facade;
 using CUS.ICS.SimpleQuery.Helpers;
@@ -36,6 +37,12 @@ namespace CUS.ICS.SimpleQuery
                     if (context.Request.Params["_portletID"] != null && context.Request.Params["_connectionFile"] != null && context.Request.Params["_queryString"] != null && context.Request.Params["_expandedColumns"] != null && context.Request.Params["_columnLabels"] != null)
                     {
                         context.Response.Write("{ \"d\" : " + serializer.Serialize(TestQuery(context.Request.Params["_connectionFile"], context.Request.Params["_queryString"], new Guid(context.Request.Params["_portletID"]), context.Request.Params["_expandedColumns"], context.Request.Params["_columnLabels"], context.Request.Params["_queryTimeout"], context.Request.Params["_hostId"])) + " } ");
+                    }
+                    break;
+                case "TestLiteralReplacement":
+                    if (context.Request.Params["portletId"] != null)
+                    {
+                        context.Response.Write("{\"d\": " + serializer.Serialize(TestLiteralReplacement(new Guid(context.Request.Params["portletId"]))) + " }");
                     }
                     break;
                 default:
@@ -106,6 +113,13 @@ namespace CUS.ICS.SimpleQuery
         }
 
         [WebMethod(EnableSession = true)]
+        public String TestLiteralReplacement(Guid portletId)
+        {
+            var portlet = ObjectFactoryWrapper.GetInstance<IPortletFacade>().FindByGuid(portletId);
+            return portlet.AccessCheck("CanAdminQueries") ? ObjectFactoryWrapper.GetInstance<ILiteralStringReplacer>().GetAvailableReplacementsTable(portlet) : string.Empty;
+        }
+
+        [WebMethod(EnableSession = true)]
         public object TestQuery(string _connectionFile, string _queryString, Guid _portletID, string _expandedColumns, string _columnLabels, string _queryTimeout, string _testHostId)
         {
             var portlet = Jenzabar.Common.ObjectFactoryWrapper.GetInstance<IPortletFacade>().FindByGuid(_portletID);
@@ -117,7 +131,6 @@ namespace CUS.ICS.SimpleQuery
                     var odbcConn = _connectionFile.Contains(".config") ? new CUS.OdbcConnectionClass3.OdbcConnectionClass3("~/ClientConfig/" + _connectionFile) : new CUS.OdbcConnectionClass3.OdbcConnectionClass3( _connectionFile);
 
                     odbcConn.ConnectionTest();
-
                     try
                     {
                         var qs = new QuerySafe();
@@ -126,7 +139,7 @@ namespace CUS.ICS.SimpleQuery
                             if (!String.IsNullOrEmpty(_testHostId))
                                 literalStringReplacer.Extend("@@HostID", _testHostId);
 
-                            var fqs = literalStringReplacer.Process(_queryString);
+                            var fqs = literalStringReplacer.Process(_queryString, portlet);
 
                             Exception exError = null;
                             DataTable dt;

@@ -207,6 +207,30 @@
             }).show();
             $('#tblDataTable').css('width', '100%');
         }
+
+        $('#btnTestLiteral').bind('click', function () {
+            $('#btnTestLiteral').attr('disabled', true);
+            $.ajax({
+                url: PortletLocation + "Admin.ashx",
+                data: {
+                    action: "TestLiteralReplacement",
+                    portletId: '<%= ParentPortlet.PortletDisplay.Portlet.ID.AsGuid %>'
+                },
+                dataType: "json",
+                type: "POST",
+                success: function (ret) {
+                    $('#btnTestLiteral').attr('disabled', false);
+                    $('<div></div>').html(ret.d).dialog({
+                        modal: true,
+                        width: 500,
+                        title: 'Literal Replacement Values',
+                        close: function () {
+                            $(this).dialog("destroy").remove();
+                        }
+                    });
+                }
+            });
+        });
     });
 </script>
 <style type="text/css">
@@ -289,18 +313,18 @@
                         Place any of the following variables into your query text and they will be replaced
                         by current data as the query is being executed:
                     </p>
-                    <ul>
-                        <li>@@HostID - the ERP ID number for the logged in JICS user</li>
-                        <li>@@Username - the JICS username for the logged in user</li>
-                        <li>@@EmailAddress - the JICS email address for the logged in user</li>
-                        <li>@@FirstName - the First Name for the logged in user</li>
-                        <li>@@LastName - the Last Name for the logged in user</li>
-                        <li>@@MiddleName - the Middle Name for the logged in user</li>
-                        <li>@@DisplayName - combination of Preferred First and Last names for the logged in
-                            user</li>
-                        <li>@@CurrentYear - the ERP system academic year configured as current</li>
-                        <li>@@CurrentSession - the ERP system academic session configured as current</li>
-                    </ul>
+                    <asp:Repeater runat="server" ID="rptLiteralStringReplacementsAvailable">
+                        <HeaderTemplate>
+                            <ul>
+                        </HeaderTemplate>
+                        <ItemTemplate>
+                            <li><%# DataBinder.Eval(Container.DataItem, "Key")%> -  <%# DataBinder.Eval(Container.DataItem, "Value")%></li>
+                        </ItemTemplate>
+                        <FooterTemplate>
+                            </ul>
+                        </FooterTemplate>
+                    </asp:Repeater>
+                    <input type="button" id="btnTestLiteral" value="See All Expanded Values"/>
                 </td>
             </tr>
             <tr>

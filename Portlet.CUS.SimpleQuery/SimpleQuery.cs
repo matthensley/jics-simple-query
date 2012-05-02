@@ -9,6 +9,7 @@ using Jenzabar.Portal.Framework.Security.Authorization;
 using Jenzabar.Common.ApplicationBlocks.Data;
 using Jenzabar.Portal.Framework.Configuration;
 using Jenzabar.Common.ApplicationBlocks.ExceptionManagement;
+using LiteralStringReplacer.Facade;
 
 namespace CUS.ICS.SimpleQuery
 {
@@ -30,7 +31,7 @@ namespace CUS.ICS.SimpleQuery
 
 	public class SimpleQuery : SecuredPortletBase
 	{
-		public SimpleQuery()
+	    public SimpleQuery()
 		{
             this.EnableViewState = false;
 		}

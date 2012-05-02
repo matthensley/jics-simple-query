@@ -67,6 +67,15 @@ namespace CUS.ICS.SimpleQuery {
         protected global::System.Web.UI.WebControls.TextBox txtQuery;
         
         /// <summary>
+        /// rptLiteralStringReplacementsAvailable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptLiteralStringReplacementsAvailable;
+        
+        /// <summary>
         /// tbTestHostId control.
         /// </summary>
         /// <remarks>

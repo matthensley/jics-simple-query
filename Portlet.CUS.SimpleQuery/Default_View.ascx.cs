@@ -269,9 +269,9 @@ namespace CUS.ICS.SimpleQuery
             var ex = new Exception();
             try
             {
-                var literalStringReplacer = ObjectFactoryWrapper.GetInstance<ILiteralStringReplacer>();
+                var literalStringReplacer =Jenzabar.Common.ObjectFactoryWrapper.GetInstance<ILiteralStringReplacer>();
 
-                var queryString = literalStringReplacer.Process(_helper.GetSetting("QueryText").Value);
+                var queryString = literalStringReplacer.Process(_helper.GetSetting("QueryText").Value, ParentPortlet.Portlet);
                 if (Convert.ToInt16(_helper.GetSetting("QueryTimeout", 0).Value) > 0)
                     return odbcConn.ConnectToERP(queryString, ref ex, Convert.ToInt16(_helper.GetSetting("QueryTimeout").Value));
                 else

@@ -6,10 +6,12 @@ using System.Web;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using System.Xml;
+using Jenzabar.Common;
 using Jenzabar.Portal.Framework.InstalledApplications;
 using Jenzabar.Portal.Framework.Web.UI;
 using CUS.ICS.SimpleQuery.Mappers;
 using CUS.ICS.SimpleQuery.Entities;
+using LiteralStringReplacer.Facade;
 
 namespace CUS.ICS.SimpleQuery
 {
@@ -48,6 +50,10 @@ namespace CUS.ICS.SimpleQuery
             {
                 SetDdlConfigFiles();
                 ShowCurrentValues();
+                var literalStringReplacer = ObjectFactoryWrapper.GetInstance<ILiteralStringReplacer>();
+                rptLiteralStringReplacementsAvailable.DataSource = literalStringReplacer.GetAvailableLiterals().Where(x => new[] { "@@HostID", "@@FirstName", "@@LastName", "@@Username", "@@EmailAddress", "@@DisplayName", "@@CurrentYear", "@@CurrentSession" }.Contains(x.Key));
+                rptLiteralStringReplacementsAvailable.DataBind();
+
 
             }
         }
