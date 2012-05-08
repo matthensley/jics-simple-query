@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Security.Principal;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
@@ -12,8 +11,8 @@ using CUS.ICS.SimpleQuery.Helpers;
 using CUS.ICS.SimpleQuery.Mappers;
 using Go.SimpleQuery.Models;
 using Jenzabar.Portal.Framework.Facade;
+using LiteralStringReplacer.Facade;
 using mobile.Models;
-using mobile.Controllers;
 using mobile.Infrastructure.Attributes;
 
 namespace Go.SimpleQuery.Controllers
@@ -22,10 +21,13 @@ namespace Go.SimpleQuery.Controllers
     public class SimpleQueryController : Controller
     {
         private readonly IPortalUserFacade _userFacade;
-        private readonly NHSimpleQuerySettingsMapper _mapper; 
-        public SimpleQueryController(IPortalUserFacade userFacade)
+        private readonly NHSimpleQuerySettingsMapper _mapper;
+        private readonly ILiteralStringReplacer _literalStringReplacer;
+
+        public SimpleQueryController(ILiteralStringReplacer literalStringReplacer, IPortalUserFacade userFacade)
         {
             _userFacade = userFacade;
+            _literalStringReplacer = literalStringReplacer;
             _mapper = new NHSimpleQuerySettingsMapper();
         }
 
@@ -41,7 +43,7 @@ namespace Go.SimpleQuery.Controllers
                     DataTable dt;
                     try
                     {
-                        dt = GetData(helper, user.Username);
+                        dt = GetData(helper);
 
                         if (Convert.ToInt32(helper.GetSetting("RowLimit", 0).Value) > 0)
                             dt = dt.AsEnumerable().Take(Convert.ToInt32(helper.GetSetting("RowLimit", 0).Value)).CopyToDataTable();
@@ -112,7 +114,7 @@ namespace Go.SimpleQuery.Controllers
             DataTable dt;
             try
             {
-                dt = GetData(helper, user.Username);
+                dt = GetData(helper);
             }
             catch (Exception ex)
             {
@@ -140,7 +142,7 @@ namespace Go.SimpleQuery.Controllers
             DataTable dt;
             try
             {
-                dt = GetData(helper, user.Username);
+                dt = GetData(helper);
             }
             catch (Exception ex)
             {
@@ -171,7 +173,7 @@ namespace Go.SimpleQuery.Controllers
             DataTable dt;
             try
             {
-                dt = GetData(helper, user.Username);
+                dt = GetData(helper);
             }
             catch (Exception ex)
             {
@@ -213,7 +215,7 @@ namespace Go.SimpleQuery.Controllers
                 DataTable dt;
                 try
                 {
-                    dt = GetData(helper, user.Username);
+                    dt = GetData(helper);
                 }
                 catch (Exception ex)
                 {
@@ -337,7 +339,7 @@ namespace Go.SimpleQuery.Controllers
             return exports;
         }
 
-        private DataTable GetData(SettingsHelper helper, string username)
+        private DataTable GetData(SettingsHelper helper)
         {
             //Try and connect
             CUS.OdbcConnectionClass3.OdbcConnectionClass3 odbcConn;
@@ -349,13 +351,12 @@ namespace Go.SimpleQuery.Controllers
             odbcConn.ConnectionTest();
 
             var ex = new Exception();
-            var queryStringFiller = new Helpers.FillQueryString(helper.GetSetting("QueryText").Value,
-                                                                               _userFacade.FindByUsername(username));
+            var queryString = _literalStringReplacer.Process(helper.GetSetting("QueryText").Value);
             DataTable dt;
             if (Convert.ToInt16(helper.GetSetting("QueryTimeout", 0).Value) > 0)
-                dt = odbcConn.ConnectToERP(queryStringFiller.FilledQueryString(), ref ex, Convert.ToInt16(helper.GetSetting("QueryTimeout").Value));
+                dt = odbcConn.ConnectToERP(queryString, ref ex, Convert.ToInt16(helper.GetSetting("QueryTimeout").Value));
             else
-                dt =  odbcConn.ConnectToERP(queryStringFiller.FilledQueryString(), ref ex);
+                dt = odbcConn.ConnectToERP(queryString, ref ex);
             if (ex != null)
             {
                 throw ex;
@@ -382,7 +383,7 @@ namespace Go.SimpleQuery.Controllers
         private List<SimpleQueryDataRow> GetMasterDetailData(SettingsHelper helper, string username)
         {
             var ret = new List<SimpleQueryDataRow>();
-            var dt = GetData(helper, username);
+            var dt = GetData(helper);
 
             if (Convert.ToInt32(helper.GetSetting("RowLimit", 0).Value) > 0)
                 dt = dt.AsEnumerable().Take(Convert.ToInt32(helper.GetSetting("RowLimit", 0).Value)).CopyToDataTable();
