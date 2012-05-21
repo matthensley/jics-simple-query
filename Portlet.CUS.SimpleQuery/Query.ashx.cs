@@ -250,6 +250,7 @@ namespace CUS.ICS.SimpleQuery
             var mapper = new NHSimpleQuerySettingsMapper();
             var settings = mapper.GetSettings(_portletID).ToList();
             var _helper = new SettingsHelper(settings, _portletID, mapper);
+            var portlet = ObjectFactoryWrapper.GetInstance<IPortletFacade>().FindByGuid(_portletID);
 
             OdbcConnectionClass3.OdbcConnectionClass3 odbcConn;
             if (_helper.GetSetting("ConfigFile").Value.EndsWith(".config"))
@@ -263,7 +264,7 @@ namespace CUS.ICS.SimpleQuery
             DataTable dt;
             var literalStringReplacer = ObjectFactoryWrapper.GetInstance<ILiteralStringReplacer>();
 
-            var queryString = literalStringReplacer.Process(_helper.GetSetting("QueryText").Value);
+            var queryString = literalStringReplacer.Process(_helper.GetSetting("QueryText").Value, portlet);
 
             if (Convert.ToInt16(_helper.GetSetting("QueryTimeout", 0).Value) > 0)
                 dt = odbcConn.ConnectToERP(queryString, ref ex, Convert.ToInt16(_helper.GetSetting("QueryTimeout").Value));
