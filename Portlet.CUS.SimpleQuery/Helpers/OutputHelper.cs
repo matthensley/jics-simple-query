@@ -7,6 +7,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI.WebControls;
 using System.Xml;
+using CUS.ICS.SimpleQuery.Entities;
 
 namespace CUS.ICS.SimpleQuery.Helpers
 {
@@ -31,7 +32,7 @@ namespace CUS.ICS.SimpleQuery.Helpers
                 doc.LoadXml(writer.ToString());
                 xml = FormatXml.Format(doc, encoding);
             }
-            catch 
+            catch
             {
                 xml = FormatXml.Format(doc, encoding);
             }
@@ -135,6 +136,24 @@ namespace CUS.ICS.SimpleQuery.Helpers
             dgResults.AlternatingItemStyle.BackColor = System.Drawing.Color.FromArgb(224, 224, 224);
             dgResults.HeaderStyle.Font.Bold = true;
             return dgResults;
+        }
+
+        public static string RenderTemplate(DataTable dt, String templateHeader, String templateRow, String templateFooter)
+        {
+            var template = new StringBuilder();
+            template.Append(templateHeader);
+            
+            for (var i = 0; i < dt.Rows.Count; i++)
+            {
+                var rowTemplate = new StringBuilder(templateRow);
+                for (var j = 0; j < dt.Rows[i].ItemArray.Length; j++)
+                {
+                    rowTemplate.Replace(@"@%" + dt.Columns[j].ColumnName + "%", dt.Rows[i].ItemArray[j].ToString());
+                }
+                template.Append(rowTemplate);
+            }
+            template.Append(templateFooter);
+            return template.ToString();
         }
     }
 }

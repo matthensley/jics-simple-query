@@ -26,6 +26,7 @@ namespace CUS.ICS.SimpleQuery
         private NHSimpleQuerySettingsMapper _mapper;
         private List<NHSimpleQuerySetting> _settings;
         private SettingsHelper _helper;
+        private ILiteralStringReplacer _literalStringReplacer;
 
         #region Web Form Designer generated code
         override protected void OnInit(EventArgs e)
@@ -65,7 +66,7 @@ namespace CUS.ICS.SimpleQuery
             _mapper = new NHSimpleQuerySettingsMapper();
             _settings = _mapper.GetSettings(_portletId).ToList();
             _helper = new SettingsHelper(_settings, _portletId, _mapper);
-
+            _literalStringReplacer = ObjectFactoryWrapper.GetInstance<ILiteralStringReplacer>();
             pnlResults.Visible = false;
             pnlLinkDescription.Visible = false;
             pnlDataTableResults.Visible = false;
@@ -136,9 +137,10 @@ namespace CUS.ICS.SimpleQuery
                         RenderOutput();
                     }
                 }
-            }else
+            }
+            else
             {
-                if(ShouldRenderOutput())
+                if (ShouldRenderOutput())
                     pnlDataTableResults.Visible = true;
             }
 
@@ -178,8 +180,9 @@ namespace CUS.ICS.SimpleQuery
             DataTable dt = null;
             try
             {
-                 dt = GetData();
-            }catch(Exception ex)
+                dt = GetData();
+            }
+            catch (Exception ex)
             {
                 this.ParentPortlet.ShowFeedback(FeedbackType.Error, "Query Failed. Contact portal administrator. " + ex);
                 return;
@@ -221,7 +224,12 @@ namespace CUS.ICS.SimpleQuery
                     case "literal":
                         preformattedResults.Text = OutputHelper.RenderLiteral(dt, _helper.GetSetting("ExportLiteralPattern", "{0}").Value);
                         break;
-
+                    case "template":
+                        preformattedResults.Text = _literalStringReplacer.Process(OutputHelper.RenderTemplate(dt, 
+                                                                                                                _helper.GetSetting("JICSTemplateHeader").Value, 
+                                                                                                                _helper.GetSetting("JICSTemplateRow").Value, 
+                                                                                                                _helper.GetSetting("JICSTemplateFooter").Value), ParentPortlet.Portlet);
+                        break;
                 }
                 pnlResults.Visible = true;
             }
@@ -269,9 +277,9 @@ namespace CUS.ICS.SimpleQuery
             var ex = new Exception();
             try
             {
-                var literalStringReplacer =Jenzabar.Common.ObjectFactoryWrapper.GetInstance<ILiteralStringReplacer>();
+                
 
-                var queryString = literalStringReplacer.Process(_helper.GetSetting("QueryText").Value, ParentPortlet.Portlet);
+                var queryString = _literalStringReplacer.Process(_helper.GetSetting("QueryText").Value, ParentPortlet.Portlet);
                 if (Convert.ToInt16(_helper.GetSetting("QueryTimeout", 0).Value) > 0)
                     return odbcConn.ConnectToERP(queryString, ref ex, Convert.ToInt16(_helper.GetSetting("QueryTimeout").Value));
                 else

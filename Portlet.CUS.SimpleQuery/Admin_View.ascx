@@ -81,7 +81,8 @@
 
                 $('#<%=divJICSOutputGridSettings.ClientID %>').hide();
                 $('#<%=divJICSOutputDataTablesSettings.ClientID %>').hide();
-
+                $('#<%=divJICSOutputTemplateSettings.ClientID %>').hide();
+                
                 switch ($("input[name='" + jicsOutputName + "']:checked").val()) {
                     case "grid":
                         $('#<%=divJICSOutputGridSettings.ClientID %>').show();
@@ -95,6 +96,9 @@
                         break;
                     case "literal":
                         break;
+                    case "template":
+                        $('#<%=divJICSOutputTemplateSettings.ClientID %>').show();
+                        break;
                 }
             });
             var goOutputName = $("#<%= rbGOOutputGrid.ClientID %>").attr('name');
@@ -102,6 +106,7 @@
 
                 $('#<%=divGOOutputGridSettings.ClientID %>').hide();
                 $('#<%=divGOOutputMasterDetailSettings.ClientID %>').hide();
+                $('#<%=divGOOutputTemplateSettings.ClientID %>').hide();
 
                 switch ($("input[name='" + goOutputName + "']:checked").val()) {
                     case "grid":
@@ -115,6 +120,9 @@
                     case "xml":
                         break;
                     case "literal":
+                        break;
+                    case "template":
+                        $('#<%=divGOOutputTemplateSettings.ClientID %>').show();
                         break;
                 }
             });
@@ -492,7 +500,18 @@
                     <input type="radio" id="rbJICSOutputLiteral" name="rbJICSOutput" value="literal"
                         runat="server" />
                     <label for="<%= rbJICSOutputLiteral.ClientID %>">
-                        Literal</label>
+                        Literal</label><br />
+                    <input type="radio" id="rbJICSOutputTemplate" name="rbJICSOutput" value="template" runat="server" />
+                    <label for="<%= rbJICSOutputTemplate.ClientID %>">
+                        Template</label>
+                    <div id="divJICSOutputTemplateSettings" runat="server" style="margin-left: 20px;">
+                        Header Template<br />
+                        <asp:TextBox runat="server" ID="tbJICSTemplateHeader" TextMode="MultiLine" Columns="40" Rows="5"></asp:TextBox><br />
+                        Row Template<br />
+                        <asp:TextBox runat="server" ID="tbJICSTemplateRow" TextMode="MultiLine" Columns="40" Rows="5"></asp:TextBox><br />
+                        Footer Template<br />
+                        <asp:TextBox runat="server" ID="tbJICSTemplateFooter" TextMode="MultiLine" Columns="40" Rows="5"></asp:TextBox>
+                    </div>
                 </td>
                 <td>
                     <strong>Asynchronous Loading</strong> - results will load after page is displayed.<br /><br />
@@ -501,7 +520,8 @@
                     paged grid using jQuery DataTables. Any columns listed in the Expanded Display 
                     Columns field will visible only when users click on an expansion icon.<br />
                     <strong>XML, CSV, or Literal</strong> - the same format will be displayed as 
-                    produced by Export options.
+                    produced by Export options.<br />
+                    <strong>Template</strong> - Use the defined template for returning data.  Use @%ColumnName% to show the value of the column. EG: @%first_name%.  You can use the standard @@VariableName replacement methods in the templates as well.
                 </td>
             </tr>
         <asp:Panel runat="server" ID="pnlGoSettings" Visible="true">
@@ -556,7 +576,18 @@
                         CSV</label><br />
                     <input type="radio" id="rbGOOutputLiteral" name="rbGOOutput" value="literal" runat="server" />
                     <label for="<%= rbGOOutputLiteral.ClientID %>">
-                        Literal</label>
+                        Literal</label><br />
+                    <input type="radio" id="rbGOOutputTemplate" name="rbGOOutput" value="template" runat="server" />
+                    <label for="<%= rbGOOutputTemplate.ClientID %>">
+                        Template</label>
+                    <div id="divGOOutputTemplateSettings" runat="server" style="margin-left: 20px;">
+                        Header Template<br />
+                        <asp:TextBox runat="server" ID="tbGOTemplateHeader" TextMode="MultiLine" Columns="40" Rows="5"></asp:TextBox><br />
+                        Row Template<br />
+                        <asp:TextBox runat="server" ID="tbGOTemplateRow" TextMode="MultiLine" Columns="40" Rows="5"></asp:TextBox><br />
+                        Footer Template<br />
+                        <asp:TextBox runat="server" ID="tbGOTemplateFooter" TextMode="MultiLine" Columns="40" Rows="5"></asp:TextBox>
+                    </div>
                 </td>
                 <td>
                     <strong>None</strong> - turns off output display for JICS Go.<br />
@@ -565,7 +596,8 @@
                     displayed only. On tap (click) any columns specified in &quot;Detail Display Columns&quot; 
                     are shown. <br />
                     <strong>XML, CSV, or Literal - </strong> the same format will be displayed as 
-                    produced by Export Options.&nbsp;
+                    produced by Export Options.<br />
+                    <strong>Template</strong> - Use the defined template for returning data.  Use @%ColumnName% to show the value of the column. EG: @%first_name%.
                 </td>
             </tr>
         </asp:Panel>

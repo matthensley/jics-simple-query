@@ -197,6 +197,13 @@ namespace CUS.ICS.SimpleQuery
                                 case "literal":
                                     html = OutputHelper.RenderLiteral(dt, _helper.GetSetting("ExportLiteralPattern", "{0}").Value);
                                     break;
+                                case "template":
+                                    var literalStringReplacer = ObjectFactoryWrapper.GetInstance<ILiteralStringReplacer>();
+                                    html = literalStringReplacer.Process(OutputHelper.RenderTemplate(dt,
+                                                                                                        _helper.GetSetting("JICSTemplateHeader").Value,
+                                                                                                        _helper.GetSetting("JICSTemplateRow").Value,
+                                                                                                        _helper.GetSetting("JICSTemplateFooter").Value), portlet);
+                                    break;
 
                             }
                             return new

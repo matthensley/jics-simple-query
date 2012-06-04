@@ -337,6 +337,51 @@ namespace CUS.ICS.SimpleQuery {
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rbJICSOutputLiteral;
         
         /// <summary>
+        /// rbJICSOutputTemplate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rbJICSOutputTemplate;
+        
+        /// <summary>
+        /// divJICSOutputTemplateSettings control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divJICSOutputTemplateSettings;
+        
+        /// <summary>
+        /// tbJICSTemplateHeader control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbJICSTemplateHeader;
+        
+        /// <summary>
+        /// tbJICSTemplateRow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbJICSTemplateRow;
+        
+        /// <summary>
+        /// tbJICSTemplateFooter control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbJICSTemplateFooter;
+        
+        /// <summary>
         /// pnlGoSettings control.
         /// </summary>
         /// <remarks>
@@ -470,6 +515,51 @@ namespace CUS.ICS.SimpleQuery {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rbGOOutputLiteral;
+        
+        /// <summary>
+        /// rbGOOutputTemplate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rbGOOutputTemplate;
+        
+        /// <summary>
+        /// divGOOutputTemplateSettings control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divGOOutputTemplateSettings;
+        
+        /// <summary>
+        /// tbGOTemplateHeader control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbGOTemplateHeader;
+        
+        /// <summary>
+        /// tbGOTemplateRow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbGOTemplateRow;
+        
+        /// <summary>
+        /// tbGOTemplateFooter control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbGOTemplateFooter;
         
         /// <summary>
         /// btnSave control.

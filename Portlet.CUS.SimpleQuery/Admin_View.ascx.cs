@@ -38,8 +38,8 @@ namespace CUS.ICS.SimpleQuery
             _mapper = new NHSimpleQuerySettingsMapper();
             _settings = _mapper.GetSettings(_portletId).ToList();
             _helper = new SettingsHelper(_settings, _portletId, _mapper);
-            _jicsOutputTypes = new[] { rbJICSOutputCSV, rbJICSOutputDataTables, rbJICSOutputGrid, rbJICSOutputXML, rbJICSOutputLiteral };
-            _goOutputTypes = new[] { rbGOOutputXML, rbGOOutputNone, rbGOOutputMasterDetail, rbGOOutputGrid, rbGOOutputCSV, rbGOOutputLiteral };
+            _jicsOutputTypes = new[] { rbJICSOutputCSV, rbJICSOutputDataTables, rbJICSOutputGrid, rbJICSOutputXML, rbJICSOutputLiteral, rbJICSOutputTemplate };
+            _goOutputTypes = new[] { rbGOOutputXML, rbGOOutputNone, rbGOOutputMasterDetail, rbGOOutputGrid, rbGOOutputCSV, rbGOOutputLiteral, rbGOOutputTemplate };
 
             // Don't show the Go settings unless it is version 1.2 or greater.
             if (new InstalledApplicationService().IsApplicationAtLeastThisVersion("JICS Go", "1.2"))
@@ -135,6 +135,7 @@ namespace CUS.ICS.SimpleQuery
                 chkExportXml.Checked = _helper.GetSetting("ExportXml", false).BoolValue;
                 chkExportCsv.Checked = _helper.GetSetting("ExportCsv", false).BoolValue;
                 chkExportLiteral.Checked = _helper.GetSetting("ExportLiteral",false).BoolValue;
+
                 if (chkExportLiteral.Checked)
                     trLiteralFormat.Attributes["style"] = "";
                 else
@@ -154,6 +155,10 @@ namespace CUS.ICS.SimpleQuery
                 chkJICSGridAltRowColors.Checked = _helper.GetSetting("JICSGridAltRowColors", false).BoolValue;
                 chkJICSShowColumnHeadings.Checked = _helper.GetSetting("JICSGridShowColumnHeadings", false).BoolValue;
                 tbJICSDataTablesExpandedColumns.Text = _helper.GetSetting("JICSDataTablesExpandedColumns").Value;
+                tbJICSTemplateHeader.Text = _helper.GetSetting("JICSTemplateHeader").Value;
+                tbJICSTemplateRow.Text = _helper.GetSetting("JICSTemplateRow").Value;
+                tbJICSTemplateFooter.Text = _helper.GetSetting("JICSTemplateFooter").Value;
+
 
                 using (var htmlInputRadioButton = _jicsOutputTypes.SingleOrDefault(x => x.Value == _helper.GetSetting("JICSOutput", "grid").Value))
                 {
@@ -162,6 +167,8 @@ namespace CUS.ICS.SimpleQuery
                         htmlInputRadioButton.Checked = true;
                         divJICSOutputGridSettings.Attributes["style"] = "display:none;margin-left:20px;";
                         divJICSOutputDataTablesSettings.Attributes["style"] = "display:none;margin-left:20px;";
+                        divJICSOutputTemplateSettings.Attributes["style"] = "display:none;margin-left:20px;";
+
                         switch (htmlInputRadioButton.Value)
                         {
                             case "grid":
@@ -169,6 +176,9 @@ namespace CUS.ICS.SimpleQuery
                                 break;
                             case "datatables":
                                 divJICSOutputDataTablesSettings.Attributes["style"] = "margin-left:20px;";
+                                break;
+                            case "template":
+                                divJICSOutputTemplateSettings.Attributes["style"] = "margin-left:20px;";
                                 break;
                         }
                     }
@@ -180,6 +190,9 @@ namespace CUS.ICS.SimpleQuery
                 chkGOGridAltRowColors.Checked = _helper.GetSetting("GOGridAltRowColors", false).BoolValue;
                 chkGOGridShowColumnHeadings.Checked = _helper.GetSetting("GOGridShowColumnHeadings", false).BoolValue;
                 tbGOOutputMasterDetailDisplayColumns.Text = _helper.GetSetting("GOMasterDetailDisplayColumns").Value;
+                tbGOTemplateHeader.Text = _helper.GetSetting("GOTemplateHeader").Value;
+                tbGOTemplateRow.Text = _helper.GetSetting("GOTemplateRow").Value;
+                tbGOTemplateFooter.Text = _helper.GetSetting("GOTemplateFooter").Value;
 
                 using (var htmlInputRadioButton = _goOutputTypes.SingleOrDefault( x=> x.Value == _helper.GetSetting("GOOutput", "none").Value) )
                 {
@@ -188,15 +201,18 @@ namespace CUS.ICS.SimpleQuery
                         htmlInputRadioButton.Checked = true;
                         divGOOutputGridSettings.Attributes["style"] = "display:none;margin-left:20px;";
                         divGOOutputMasterDetailSettings.Attributes["style"] = "display:none;margin-left:20px;";
+                        divGOOutputTemplateSettings.Attributes["style"] = "display:none;margin-left:20px;";
+
                         switch (htmlInputRadioButton.Value)
                         {
                             case "grid":
                                 divGOOutputGridSettings.Attributes["style"] = "margin-left:20px;";
-
                                 break;
                             case "masterdetail":
                                 divGOOutputMasterDetailSettings.Attributes["style"] = "margin-left:20px;";
-                                
+                                break;
+                            case "template":
+                                divGOOutputTemplateSettings.Attributes["style"] = "margin-left:20px;";
                                 break;
                         }
                     }
@@ -301,6 +317,11 @@ namespace CUS.ICS.SimpleQuery
                             tbJICSDataTablesExpandedColumns.Text = String.Join(",", expandedColumn.ToArray());
 
                             break;
+                        case "template":
+                            _mapper.UpdateSetting(_helper.GetSetting("JICSTemplateHeader"), tbJICSTemplateHeader.Text);
+                            _mapper.UpdateSetting(_helper.GetSetting("JICSTemplateRow"), tbJICSTemplateRow.Text);
+                            _mapper.UpdateSetting(_helper.GetSetting("JICSTemplateFooter"), tbJICSTemplateFooter.Text);
+                            break;
                     }
                 }
                 else
@@ -340,6 +361,11 @@ namespace CUS.ICS.SimpleQuery
                             _mapper.UpdateSetting(_helper.GetSetting("GOMasterDetailDisplayColumns"), String.Join(",", expandedColumn.ToArray()));
 
                             tbGOOutputMasterDetailDisplayColumns.Text = String.Join(",", expandedColumn.ToArray());
+                            break;
+                        case "template":
+                            _mapper.UpdateSetting(_helper.GetSetting("GOTemplateHeader"), tbGOTemplateHeader.Text);
+                            _mapper.UpdateSetting(_helper.GetSetting("GOTemplateRow"), tbGOTemplateRow.Text);
+                            _mapper.UpdateSetting(_helper.GetSetting("GOTemplateFooter"), tbGOTemplateFooter.Text);
                             break;
                     }
 

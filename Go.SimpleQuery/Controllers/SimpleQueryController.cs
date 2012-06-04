@@ -101,6 +101,8 @@ namespace Go.SimpleQuery.Controllers
                     return Csv(cid, user);
                 case "literal":
                     return Literal(cid, user);
+                case "template":
+                    return Template(cid, user);
                 case "none":
                     return View("Error", new Error { ErrorMessage = "Results for this portlet are not enabled for JICS Go" });
                 default:
@@ -164,6 +166,37 @@ namespace Go.SimpleQuery.Controllers
                                                               helper.GetSetting("ColumnLabels").Value) + "</pre>",
                                 AllowExports = helper.GetSetting("GOAllowExports").BoolValue
                             };
+            return View("Literal", model);
+        }
+
+        public ActionResult Template(ContentIdentifier cid, User user)
+        {
+            var helper = GetHelper(cid.PortletId.Value);
+            DataTable dt;
+            try
+            {
+                dt = GetData(helper);
+            }
+            catch (Exception ex)
+            {
+                return View("Error",
+                            new Error
+                            {
+                                ErrorMessage = "An error occurred while querying the database.",
+                                Exception =
+                                    _userFacade.FindByUsername(user.Username).IsSiteAdmin
+                                        ? ex.ToString().Replace("\n", "<br />")
+                                        : String.Empty
+                            });
+            }
+            var model = new SimpleQueryLiteral
+            {
+                Html = _literalStringReplacer.Process(OutputHelper.RenderTemplate(dt,
+                                                                                    helper.GetSetting("JICSTemplateHeader").Value,
+                                                                                    helper.GetSetting("JICSTemplateRow").Value,
+                                                                                    helper.GetSetting("JICSTemplateFooter").Value)),
+                AllowExports = helper.GetSetting("GOAllowExports").BoolValue
+            };
             return View("Literal", model);
         }
 
